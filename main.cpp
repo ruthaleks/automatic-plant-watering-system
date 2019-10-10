@@ -1,73 +1,49 @@
+#include "main.hpp"
+
 #include <iostream>
 
-class Tank 
+Tank::Tank(const int t_id) : ID(t_id){}
+
+int Tank::get_level()
 {
-private:
-    int water_level; // remaing water quantity in the tank 
+    m_water_level = 1;
+    std::cout << "Read the pressure sensor data..";
+    return m_water_level; 
+}
 
-public:
-    int id;          // tank ID
-
-    Tank(int id_number)
-    {
-        id = id_number;
-    }
-
-    int get_level()
-    {
-        water_level = 1;
-        std::cout << "Read the pressure sensor data..";
-        return water_level; 
-    }
-
-    int low_water_level()
-    /* send an email or power up a led */
-    {
-        std::cout << "Low water level in the tank";
-        return 0;
-    }
-};
-
-
-class Pot 
+// send an email or power up a led 
+int Tank::low_water_level() 
 {
-private:
-    int humidity;       // current humidity 
-    int volume;         // tracking the water volume added to the pot during a day            
+    std::cout << "Low water level in the tank";
+    return 0;
+}
 
-public:
-    int id;               // identification number
-//    Tank water_tank;      // water tank that is connected to each pot 
 
-    Pot(int id_number)
-    {
-        id = id_number;
-    }
+Pot::Pot(const int t_id) : ID( t_id ){}
 
-    int get_humidity() 
-    {
-        humidity = 1;
-        std::cout << "Read data from humidity sensor..\n";   
-        return humidity;      
-    }
+int Pot::get_humidity() 
+{
+    m_humidity = 1;
+    std::cout << "Read data from humidity sensor..\n";   
+    return m_humidity;      
+}
 
-    int add_water()
-    {
-        std::cout << "Adding water to the plant..\n";
-        return 0;
-    }
-};
+int Pot::add_water()
+{
+    std::cout << "Adding water to the plant..\n";
+    return 0;
+}
 
 
 int main()
 {
     std::cout << "Start of main..\n";
     
-    Tank tank(100);
-    std::cout << "Created a new water tank with ID: " << tank.id << '\n';
+    Tank tank{100};
+    std::cout << "Created a new water tank with ID: " << tank.ID << '\n';
     
     Pot pot{1};
-    std::cout << "Created a new flower pot with ID: " << pot.id << '\n';
+    std::cout << "Created a new flower pot with ID: " << pot.ID << '\n';
 
 
     return 0;

@@ -8,9 +8,9 @@ private:
 public:
     int id;          // tank ID
 
-    Tank(int id)
+    Tank(int id_number)
     {
-        id = id;
+        id = id_number;
     }
 
     int get_level()
@@ -39,9 +39,9 @@ public:
     int id;               // identification number
 //    Tank water_tank;      // water tank that is connected to each pot 
 
-    Pot(int id)
+    Pot(int id_number)
     {
-        id = id;
+        id = id_number;
     }
 
     int get_humidity() 
@@ -63,7 +63,7 @@ int main()
 {
     std::cout << "Start of main..\n";
     
-    Tank tank{100};
+    Tank tank(100);
     std::cout << "Created a new water tank with ID: " << tank.id << '\n';
     
     Pot pot{1};

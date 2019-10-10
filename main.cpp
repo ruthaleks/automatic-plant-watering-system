@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Tank::Tank(const int t_id) : ID(t_id){}
+Tank::Tank(const int &t_id) : ID(t_id){}
 
 int Tank::get_level()
 {
@@ -19,7 +19,7 @@ int Tank::low_water_level()
 }
 
 
-Pot::Pot(const int t_id) : ID( t_id ){}
+Pot::Pot(const int &t_id) : ID( t_id ){}
 
 int Pot::get_humidity() 
 {

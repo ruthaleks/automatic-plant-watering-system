@@ -1,10 +1,10 @@
 class Tank 
 {
-    int m_water_level; // remaing water quantity in the tank 
+    int m_water_level{}; // remaing water quantity in the tank 
 
     public: 
         const int ID;       // tank ID 
-        Tank( const int );        // constructor
+        Tank( const int & );        // constructor
         int get_level(); 
         int low_water_level();
 
@@ -12,12 +12,13 @@ class Tank
 
 class Pot
 {
-    int m_humidity;   // current humidity of the soil
-    int m_volume;     // water volume added to the pot during a certain time period
+    int m_humidity{};   // current humidity of the soil
+    int m_volume{};     // water volume added to the pot during a certain time period
+    //Tank *ptr_tank;   // poiter to water tank
 
     public:
-        const int ID;       // pot ID
-        Pot( const int );         // constructor
+        const int ID;             // pot ID
+        Pot( const int &); // constructor
         int get_humidity(); 
         int add_water();    
 };

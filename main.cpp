@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-// globals 
+/* Globals */ 
 uint32 id_counter{ 1 };
 
 Tank::Tank() : ID(id_counter)
@@ -63,14 +63,14 @@ int32 Pot::add_water()
     return 0;
 }
 
-#undef UNIT_TEST
+#define UNIT_TEST
 int32 main()
 {
 
 #ifdef UNIT_TEST
     test();
 #endif 
-
+    std::cout << "** Start of main **\n";
     Tank tank{}; 
     std::cout << "Created a new water tank with ID: " << tank.ID << '\n';    
     Pot pot{};
@@ -83,10 +83,6 @@ int32 main()
     } else {
         std::cout << "Failed to connect the pot\n";
     }
-
-
-    
-    
 
     return 0;
 }

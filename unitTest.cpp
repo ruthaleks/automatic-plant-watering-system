@@ -1,8 +1,9 @@
+#include <iostream>
+#include <cstdint>
+
 #include "main.hpp"
 #include "errorCodes.hpp"
 #include "unitTest.hpp"
-
-#include <iostream>
 
 bool test_connect_to_tank()
 {
@@ -13,7 +14,7 @@ bool test_connect_to_tank()
     Pot pot{};
     Tank tank{};
 
-    int32 ecode{ pot.connect_to_tank( &tank ) };
+    int32_t ecode{ pot.connect_to_tank( &tank ) };
     if ( ecode != NO_ERROR)
     {
         std::cout << "Test 1: Failed to connect. Error code: " 
@@ -40,7 +41,7 @@ bool test_connect_to_tank()
 
     std::cout << "Testing Pot::get_tank_id()\n";
     // Test3: Test to obtain the tank ID number
-    uint32 id{ pot.get_tank_id() };
+    uint32_t id{ pot.get_tank_id() };
     if (id == tank.ID)
     {
         std::cout << "Test 3: Passed.\n";

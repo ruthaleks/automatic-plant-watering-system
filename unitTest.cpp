@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdint>
 
+#include "devices.hpp"
 #include "main.hpp"
 #include "errorCodes.hpp"
 #include "unitTest.hpp"
@@ -11,8 +12,8 @@ bool test_connect_to_tank()
 
     std::cout << "Testing Pot::connect_to_tank()\n";
     // Test 1: Connect a tank to a pot
-    Pot pot{};
-    Tank tank{};
+    Pot pot{ SIM_MoistSensor };
+    Tank tank{ SIM_LoadSensor, SIM_Pump };
 
     int32_t ecode{ pot.connect_to_tank( &tank ) };
     if ( ecode != NO_ERROR)
@@ -25,7 +26,7 @@ bool test_connect_to_tank()
     }
 
     // Test2: Send in a nullptr 
-    Pot pot2{};
+    Pot pot2{ SIM_LoadSensor };
     ecode = pot2.connect_to_tank( nullptr );
     if (ecode == NULL_POINTER_ERROR )
     {

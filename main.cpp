@@ -1,9 +1,12 @@
 #include <iostream>
 #include <cstdint>
 
+#include "devices.hpp"
 #include "main.hpp"
+#include "control.hpp"
 #include "errorCodes.hpp"
 #include "unitTest.hpp"
+
 
 /* Defines */
 #define UNIT_TEST
@@ -12,12 +15,16 @@
 uint32_t id_counter{ 1 };
 
 /* Class definitions */
-Tank::Tank() : ID(id_counter){ id_counter++; }
+Tank::Tank( SensorID load_sensor, ActuatorID pump) : 
+    m_load_sensor_id{ load_sensor }, m_pump_id{ pump }, ID{ id_counter } 
+    { 
+        id_counter++; 
+    }
 
-int32_t Tank::get_level()
+uint32_t Tank::get_level()
 {
-    m_water_level = 1;
-    std::cout << "Read the pressure sensor data..";
+    m_water_level = get_sensor_value( m_load_sensor_id );
+    std::cout << "Read the pressure sensor data..\n";
     return m_water_level; 
 }
 
@@ -28,8 +35,14 @@ int32_t Tank::low_water_level()
     return 0;
 }
 
+SensorID Tank::get_sensor(){ return m_load_sensor_id; } 
+ActuatorID Tank::get_actuator(){ return m_pump_id; }
 
-Pot::Pot() : ID( id_counter ){ id_counter++; }
+Pot::Pot( SensorID moist_sensor) :  
+    m_moist_sensor_id{ moist_sensor}, ID{ id_counter }
+    { 
+        id_counter++; 
+    }
 
 int32_t Pot::connect_to_tank( Tank *t_p_tank )
 {   
@@ -52,45 +65,20 @@ uint32_t Pot::get_tank_id()
 
 int32_t Pot::get_humidity() 
 {
-    m_humidity = 1;
     std::cout << "Read data from humidity sensor..\n";   
+    m_humidity = get_sensor_value( m_moist_sensor_id );
     return m_humidity;      
 }
 
 int32_t Pot::add_water()
 {
     std::cout << "Adding water to the plant..\n";
+    set_actuator( m_p_tank->get_actuator(), 1 );
+    set_actuator( m_p_tank->get_actuator(), 0 );
     return 0;
 }
 
-#define WET_SOIL_THRESHOLD_VALUE 10 // a value that is >= than threshold is wet
-#define DRY_SOIL_THRESHOLD_VALUE 5  // a value that is <= than threshold is dry
-
-uint32_t check_if_sensor_value_is_valid( uint32_t value )
-{
-    return value;
-}
-
-int32_t control_routine(Pot pot)
-{   
-    std::cout << "Start of control routine\n";
-    
-    std::cout << "Check the soil humidity\n"; 
-    uint32_t current_humidity = pot.get_humidity();
-    std::cout << "Current humidity: " 
-    << current_humidity << '\n';
-
-    check_if_sensor_value_is_valid( current_humidity );
-    
-/*
-    if (current_humidity <= DRY_SOIL_THRESHOLD_VALUE ){
-        std::cout << "The soil is dry.\n";
-        pot.add_water()
-    } else if (current_humidity >){}
-*/
-    return 0;
-}
-
+SensorID Pot::get_sensor(){ return m_moist_sensor_id; }
 
 int32_t main()
 {
@@ -98,9 +86,9 @@ int32_t main()
     test();
 #endif 
     std::cout << "** Start of main **\n";
-    Tank tank{}; 
+    Tank tank{ SIM_LoadSensor, SIM_Pump }; 
     std::cout << "Created a new water tank with ID: " << tank.ID << '\n';    
-    Pot pot{};
+    Pot pot{ SIM_MoistSensor };
     std::cout << "Created a new flower pot with ID: " << pot.ID << '\n';
 
     if (pot.connect_to_tank( &tank ) == NO_ERROR)
@@ -111,7 +99,7 @@ int32_t main()
         std::cout << "Failed to connect the pot\n";
     }
 
-    control_routine(pot);
+    control_routine(pot, tank);
 
 
 

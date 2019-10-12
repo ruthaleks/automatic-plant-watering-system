@@ -9,7 +9,7 @@ class Tank
     public: 
         const uint32_t ID;            // tank ID 
         Tank( SensorID, ActuatorID );        // constructor
-        uint32_t get_level(); 
+        uint32_t get_level();  // remove get
         int32_t low_water_level();
         SensorID get_sensor();
         ActuatorID get_actuator(); 

@@ -4,6 +4,8 @@
 #include "devices.hpp"
 #include "errorCodes.hpp"
 
+// consider adding class for sensor and actuator 
+
 uint32_t get_sensor_value( SensorID sensor )
 {
     switch ( sensor )

@@ -29,7 +29,7 @@ class Pot
         int32_t connect_to_tank(Tank *);
         uint32_t get_tank_id();
         int32_t get_humidity(); 
-        int32_t add_water();
+        int32_t add_water(); // remove tank pointer from class and take in one to add water
         SensorID get_sensor();
 };
 

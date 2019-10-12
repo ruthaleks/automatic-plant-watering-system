@@ -7,6 +7,7 @@
 #include "errorCodes.hpp"
 #include "unitTest.hpp"
 
+//move classes to separate files out from main. pot.cpp and pot.hpp
 
 /* Defines */
 #define UNIT_TEST

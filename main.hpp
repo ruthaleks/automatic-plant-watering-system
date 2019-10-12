@@ -1,5 +1,8 @@
 #pragma once
 // const everywhere
+// consider using smart poiters
+// move out add_water from class 
+
 class Tank 
 {
     uint32_t m_water_level{}; // remaing water quantity in the tank 

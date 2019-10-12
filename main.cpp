@@ -8,6 +8,7 @@
 #include "unitTest.hpp"
 
 //move classes to separate files out from main. pot.cpp and pot.hpp
+//remove ID:s
 
 /* Defines */
 #define UNIT_TEST

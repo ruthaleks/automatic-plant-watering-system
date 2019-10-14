@@ -10,5 +10,5 @@ class Pot
 
     public:
         Pot( SensorType );            // constructor
-        int32_t humidity() const; 
+        uint32_t humidity() const; 
 };

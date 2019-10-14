@@ -17,10 +17,8 @@ int32_t main()
     Pot pot{ SensorType::SIM_MoistSensor };
     std::cout << "Created a new pot \n";
 
-    std::cout << tank.level() << '\n';
 
-
-//    control_routine(pot, tank);
+   control_routine(pot, tank);
 
 
 

@@ -12,16 +12,16 @@
 int32_t main()
 {
     std::cout << "** Start of main **\n";
-    Tank tank{ SIM_LoadSensor, SIM_Pump }; 
+    Tank tank{ SensorType::SIM_LoadSensor, ActuatorType::SIM_Pump }; 
     std::cout << "Created a new water tank\n";    
-    Pot pot{ SIM_MoistSensor };
+    Pot pot{ SensorType::SIM_MoistSensor };
     std::cout << "Created a new pot \n";
 
-    int32_t v = tank.sensor_ptr->type();
-    int32_t w = tank.actuator_ptr->type();
+//    SensorType v = tank.sensor_ptr->type();
+//   SensorType w = tank.actuator_ptr->type();
 
-    std::cout << v << '\n';
-    std::cout << w << '\n';
+    //std::cout << v << '\n';
+    //std::cout << w << '\n';
 
 
 //    control_routine(pot, tank);

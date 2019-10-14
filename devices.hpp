@@ -1,10 +1,9 @@
 #pragma once
-// Change to scoped enums
-enum SensorType { ADA_MoistSensor,
+enum class SensorType { ADA_MoistSensor,
                   SIM_MoistSensor,
                   SIM_LoadSensor };
 
-enum ActuatorType { SIM_Pump };
+enum class ActuatorType { SIM_Pump };
 
 
 

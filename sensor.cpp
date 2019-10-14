@@ -6,7 +6,7 @@
 
 Sensor::Sensor( SensorType type) : m_type{ type }{}
 
-int32_t Sensor::value() const 
+uint32_t Sensor::value() const 
 {
     return 1;
 }
@@ -14,4 +14,9 @@ int32_t Sensor::value() const
 SensorType Sensor::type() const
 {
     return m_type;
+}
+
+uint32_t Sensor::threashold() const
+{
+    return m_threashold_value;
 }

@@ -1,21 +1,18 @@
+#include <memory>
 #include <iostream>
 #include <cstdint>
 
 #include "devices.hpp"
+#include "sensor.hpp"
 #include "pot.hpp"
 
 
-Pot::Pot( SensorType moist_sensor) : m_moist_sensor{ moist_sensor }{}
+Pot::Pot( SensorType sensor_type) : m_sensor_type{ sensor_type }{}
 
 int32_t Pot::humidity() const 
 {
     std::cout << "Read data from humidity sensor..\n";   
-    //m_humidity = get_sensor_value( m_moist_sensorid );
-    return 1;
+    return m_sensor_ptr->value();
 }
 
-SensorType Pot::sensor() const
-{ 
-    return m_moist_sensor; 
-}
 

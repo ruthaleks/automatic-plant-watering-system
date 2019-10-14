@@ -17,11 +17,7 @@ int32_t main()
     Pot pot{ SensorType::SIM_MoistSensor };
     std::cout << "Created a new pot \n";
 
-//    SensorType v = tank.sensor_ptr->type();
-//   SensorType w = tank.actuator_ptr->type();
-
-    //std::cout << v << '\n';
-    //std::cout << w << '\n';
+    std::cout << tank.level() << '\n';
 
 
 //    control_routine(pot, tank);

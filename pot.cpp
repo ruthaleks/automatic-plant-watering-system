@@ -17,11 +17,12 @@ uint32_t Pot::humidity() const
 
 bool Pot::is_dry() const
 {   
-    if (m_sensor_type =! SensorType::NO_Sensor){
+    if (m_sensor_type != SensorType::NO_Sensor){
         if (humidity() < m_sensor_ptr->threashold() ) {  
             return true; // soil is dry
         } else {
-            return false; 
+            return false;
+        }
     } else {
         std::cout << "No humidity sensor connected \n";
         return false;

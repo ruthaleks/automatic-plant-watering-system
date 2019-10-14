@@ -11,4 +11,5 @@ class Tank
         uint32_t level() const;   
         SensorType sensor() const;
         ActuatorType actuator() const;
+        void add_water( float ) const;
 };

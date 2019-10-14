@@ -15,4 +15,9 @@ uint32_t Pot::humidity() const
     return m_sensor_ptr->value();
 }
 
+SensorType Pot::sensor() const
+{
+    return m_sensor_type;
+}
+
 

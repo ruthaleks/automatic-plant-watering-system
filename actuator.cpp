@@ -20,3 +20,8 @@ ActuatorType Actuator::type() const
 {
     return m_type;
 }
+
+float Actuator::rate_per_second() const
+{
+    return m_rate_per_second;
+}

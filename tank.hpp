@@ -9,5 +9,6 @@ class Tank
     public: 
         Tank( SensorType, ActuatorType );        // constructor
         uint32_t level() const;   
-
+        SensorType sensor() const;
+        ActuatorType actuator() const;
 };

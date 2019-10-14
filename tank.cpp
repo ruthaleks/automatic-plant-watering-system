@@ -15,3 +15,13 @@ uint32_t Tank::level() const
     return m_sensor_ptr->value(); 
 }
 
+SensorType Tank::sensor() const
+{
+    return m_sensor_type;
+}
+
+ActuatorType Tank::actuator() const
+{
+    return m_actuator_type;
+}
+

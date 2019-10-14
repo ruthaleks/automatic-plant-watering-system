@@ -1,10 +1,13 @@
+#include <memory>
 #include <iostream>
 
 #include "devices.hpp"
+#include "sensor.hpp"
+#include "actuator.hpp"
 #include "tank.hpp"
 
-Tank::Tank( SensorID load_sensor, ActuatorID pump) : 
-    m_load_sensor{ load_sensor }, m_pump{ pump }{}
+Tank::Tank( SensorType sensor_type, ActuatorType actuator_type ) : 
+m_sensor_type{ sensor_type }, m_actuator_type{ actuator_type }{}
 
 uint32_t Tank::level() const
 {
@@ -13,12 +16,3 @@ uint32_t Tank::level() const
     return 1; 
 }
 
-SensorID Tank::sensor() const
-{ 
-    return m_load_sensor; 
-} 
-
-ActuatorID Tank::actuator() const
-{ 
-    return m_pump; 
-}

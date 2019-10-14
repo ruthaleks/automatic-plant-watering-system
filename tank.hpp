@@ -1,13 +1,13 @@
 class Tank 
 {
     uint32_t m_water_level{}; // remaing water quantity in the tank 
-    SensorID m_load_sensor{};
-    ActuatorID m_pump{};
+    SensorType m_sensor_type{};
+    ActuatorType m_actuator_type{};
 
     public: 
-        Tank( SensorID, ActuatorID );        // constructor
-        uint32_t level() const;  // remove get 
-        SensorID sensor() const;
-        ActuatorID actuator() const; 
+        std::unique_ptr<Sensor> sensor_ptr{ new Sensor{ m_sensor_type } };
+        std::unique_ptr<Actuator> actuator_ptr{ new Actuator{ m_actuator_type } };
+        Tank( SensorType, ActuatorType );        // constructor
+        uint32_t level() const;   
 
 };

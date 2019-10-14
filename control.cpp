@@ -1,7 +1,10 @@
+#include <memory>
 #include <cstdint>
 #include <iostream>
 
 #include "devices.hpp"
+#include "sensor.hpp"
+#include "actuator.hpp"
 #include "pot.hpp"
 #include "tank.hpp"
 

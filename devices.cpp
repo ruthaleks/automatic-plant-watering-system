@@ -6,7 +6,7 @@
 
 // consider adding class for sensor and actuator 
 
-uint32_t get_sensor_value( SensorID sensor )
+uint32_t get_sensor_value( SensorType sensor )
 {
     switch ( sensor )
     {
@@ -23,7 +23,7 @@ uint32_t get_sensor_value( SensorID sensor )
     }
 }
 
-int32_t set_actuator( ActuatorID actuator, int32_t value )
+int32_t set_actuator( ActuatorType actuator, int32_t value )
 {
     switch (actuator)
     {

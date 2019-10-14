@@ -5,7 +5,7 @@
 #include "pot.hpp"
 
 
-Pot::Pot( SensorID moist_sensor) : m_moist_sensor{ moist_sensor }{}
+Pot::Pot( SensorType moist_sensor) : m_moist_sensor{ moist_sensor }{}
 
 int32_t Pot::humidity() const 
 {
@@ -14,7 +14,7 @@ int32_t Pot::humidity() const
     return 1;
 }
 
-SensorID Pot::sensor() const
+SensorType Pot::sensor() const
 { 
     return m_moist_sensor; 
 }

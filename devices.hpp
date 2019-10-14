@@ -1,12 +1,12 @@
 #pragma once
 // Change to scoped enums
-enum SensorID { ADA_MoistSensor,
-                SIM_MoistSensor,
-                SIM_LoadSensor };
+enum SensorType { ADA_MoistSensor,
+                  SIM_MoistSensor,
+                  SIM_LoadSensor };
 
-enum ActuatorID { SIM_Pump };
+enum ActuatorType { SIM_Pump };
 
 
 
-uint32_t get_sensor_value( SensorID );       // return data
-int32_t set_actuator( ActuatorID, int32_t ); // return status
+uint32_t get_sensor_value( SensorType );       // return data
+int32_t set_actuator( ActuatorType, int32_t ); // return status

@@ -15,6 +15,15 @@ uint32_t Pot::humidity() const
     return m_sensor_ptr->value();
 }
 
+bool Pot::is_dry() const
+{
+    if (humidity() < m_sensor_ptr->threashold() ) {  
+        return true; // soil is dry
+    } else {
+        return false; 
+    }
+}
+
 SensorType Pot::sensor() const
 {
     return m_sensor_type;

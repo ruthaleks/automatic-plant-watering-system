@@ -1,4 +1,4 @@
-# Automatic watering system 
+# Automatic plant watering system 
 The purpose of this project is to gain more pratical experience and knowledge within embedded programming using C++.
 
 ## Project description 
@@ -19,13 +19,13 @@ In order to avoid flooding it is importaint to implement cetrain security functi
 
 ## Pin connections
 
-###Relay module (control of water pump) 
+**Relay module (control of water pump)**
 
 * Controlled through GPIO18 (pin 12) which is connected *S* on the relay
 * Connect *+* to 3V3 (pin 1)
 * Connect *-* to GND (pin 9)
 
-###LED
+**LED**
 
 * Controlled through GPIO4 (pin 7) which is connected to *+* (longer leg) of the led
 * Make sure to include a 330ohm resistor in the circuit to limit the current flow

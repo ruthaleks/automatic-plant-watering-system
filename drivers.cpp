@@ -27,7 +27,8 @@ int32_t read_sensor_value( )
     int32_t fd = wiringPiI2CSetup( DEVICE_ADDRESS );
 
     wiringPiI2CWriteReg8( fd, BASE, CHANNEL_OFFSET );
-    int16_t raw_data = wiringPiI2CRead16( fd, 0x00 ); 
+    delay(10);
+    int16_t raw_data = wiringPiI2CReadReg16( fd, 0x00 ); 
 
     return swap_endianess( raw_data );    
 }

@@ -12,7 +12,7 @@ build: $(SRC) devices.cpp
 	$(CC) -o $(OBJ) $(SRC) devices.cpp $(CPPFLAGS)
 
 pi: $(SRC) drivers.cpp
-	$(CC) -o $(PI_OBJ) $(SRC) drivers.cpp $(CPPFLAGS) -DPI
+	$(CC) -o $(PI_OBJ) $(SRC) drivers.cpp $(CPPFLAGS) -lwiringPi -DPI
 
 run: $(OBJ)
 	./$(OBJ) 

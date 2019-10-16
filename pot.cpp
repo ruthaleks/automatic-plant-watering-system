@@ -11,8 +11,10 @@ Pot::Pot( SensorType sensor_type) : m_sensor_type{ sensor_type }{}
 
 uint32_t Pot::humidity() const 
 {
-    std::cout << "Read data from humidity sensor..\n";   
-    return m_sensor_ptr->value();
+    std::cout << "Read data from humidity sensor..\n";
+    uint32_t v = m_sensor_ptr->value(); 
+    std::cout << "Current humidity: " << v << '\n';
+    return v;
 }
 
 bool Pot::is_dry() const

@@ -1,7 +1,18 @@
+CC = g++
+CPPFLAGS = -std=c++17 -Wall -Werror -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
+SRC = main.cpp control.cpp pot.cpp tank.cpp sensor.cpp actuator.cpp
+OBJ = app
+
+PI_OBJ = appPi
+
+
 all: build run
 
-build: main.cpp control.cpp pot.cpp tank.cpp sensor.cpp actuator.cpp
-	g++ -o app main.cpp control.cpp tank.cpp pot.cpp sensor.cpp actuator.cpp -std=c++17 -Wall -Werror -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
+build: $(SRC)
+	$(CC) -o $(OBJ) $(SRC) $(CPPFLAGS)
 
-run: app
-	./app 
+pi: $(SRC)
+	$(CC) -o $(PI_OBJ) $(SRC) $(CPPFLAGS) -DPI
+
+run: $(OBJ)
+	./$(OBJ) 

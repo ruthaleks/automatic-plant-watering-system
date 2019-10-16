@@ -1,0 +1,33 @@
+/*
+* This file is only included when building for Raspberry Pi and 
+* replaces devices.cpp. The wiringPi library
+* support only 32-bit Raspbian and no other platform. 
+*/
+#include <cstdint>
+#include <iostream>
+
+#include <wiringPi.h>
+#include <wiringPiI2C.h>
+
+#include "adafruitSoilSensor.hpp"
+#include "devices.hpp"
+
+
+int16_t swap_endianess( int16_t data )
+{
+    uint8_t b_low = (data & 0xff);
+    uint8_t b_high = ((data & 0xff00) >> 8); 
+    return ((b_low << 8) | b_high); 
+}
+
+
+int32_t read_sensor_value( )
+{
+    wiringPiSetup();
+    int32_t fd = wiringPiI2CSetup( DEVICE_ADDRESS );
+
+    wiringPiI2CWriteReg8( fd, BASE, CHANNEL_OFFSET );
+    int16_t raw_data = wiringPiI2CRead16( fd, 0x00 ); 
+
+    return swap_endianess( raw_data );    
+}

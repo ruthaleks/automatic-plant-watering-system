@@ -1,14 +1,14 @@
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 
 #include "devices.hpp"
 #include "sensor.hpp"
 
 Sensor::Sensor( SensorType type) : m_type{ type }{}
 
-uint32_t Sensor::value() const 
+int32_t Sensor::value() const 
 {
-    return 1;
+    return read_sensor_value( );
 }
 
 SensorType Sensor::type() const

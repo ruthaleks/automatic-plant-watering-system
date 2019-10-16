@@ -8,11 +8,11 @@ PI_OBJ = appPi
 
 all: build run
 
-build: $(SRC)
-	$(CC) -o $(OBJ) $(SRC) $(CPPFLAGS)
+build: $(SRC) devices.cpp
+	$(CC) -o $(OBJ) $(SRC) devices.cpp $(CPPFLAGS)
 
-pi: $(SRC)
-	$(CC) -o $(PI_OBJ) $(SRC) $(CPPFLAGS) -DPI
+pi: $(SRC) drivers.cpp
+	$(CC) -o $(PI_OBJ) $(SRC) drivers.cpp $(CPPFLAGS) -DPI
 
 run: $(OBJ)
 	./$(OBJ) 

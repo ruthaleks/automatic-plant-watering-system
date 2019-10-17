@@ -25,7 +25,3 @@ SensorType SensorMonitor::type() const
     return m_type;
 }
 
-uint32_t SensorMonitor::threashold() const
-{
-    return m_threashold_value;
-}

@@ -1,10 +1,10 @@
-#include <memory>
-#include <iostream>
 #include <cstdint>
+#include <iostream>
+#include <memory>
 
 #include "devices.hpp"
-#include "sensorMonitor.hpp"
 #include "pot.hpp"
+#include "sensorMonitor.hpp"
 
 
 Pot::Pot( SensorType sensor_type) : m_sensor_ptr{ new SensorMonitor{sensor_type} }{}
@@ -18,11 +18,15 @@ uint32_t Pot::humidity() const
 }
 
 bool Pot::is_dry() const
-{   
-    if (humidity() < m_sensor_ptr->threashold() ) {  
+{  
+    if (m_sensor_ptr->type() == SensorType::NO_Sensor){
+        return false;
+    }
+    
+    if (humidity() < m_threashold ) {  
         return true; // soil is dry
     } 
-        return false;
+    return false;
 }
 
 SensorType Pot::sensor() const
@@ -30,4 +34,8 @@ SensorType Pot::sensor() const
     return m_sensor_ptr->type();
 }
 
+void Pot::set_treashold( uint32_t value)
+{
+    m_threashold = value;
+}
 

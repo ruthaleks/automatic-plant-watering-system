@@ -7,7 +7,7 @@
 #include "pot.hpp"
 
 
-Pot::Pot( SensorType sensor_type) : m_sensor_type{ sensor_type }{}
+Pot::Pot( SensorType sensor_type) : m_sensor_ptr{ new SensorMonitor{sensor_type} }{}
 
 uint32_t Pot::humidity() const 
 {
@@ -19,21 +19,15 @@ uint32_t Pot::humidity() const
 
 bool Pot::is_dry() const
 {   
-    if (m_sensor_type != SensorType::NO_Sensor){
-        if (humidity() < m_sensor_ptr->threashold() ) {  
-            return true; // soil is dry
-        } else {
-            return false;
-        }
-    } else {
-        std::cout << "No humidity sensor connected \n";
+    if (humidity() < m_sensor_ptr->threashold() ) {  
+        return true; // soil is dry
+    } 
         return false;
-    }
 }
 
 SensorType Pot::sensor() const
 {
-    return m_sensor_type;
+    return m_sensor_ptr->type();
 }
 
 

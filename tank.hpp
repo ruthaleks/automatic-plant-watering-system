@@ -8,15 +8,13 @@
 class Tank 
 {
     uint32_t m_water_level{}; // remaing water quantity in the tank 
-    SensorType m_sensor_type{};
-    ActuatorType m_actuator_type{};
-    std::unique_ptr<SensorMonitor> m_sensor_ptr{ new SensorMonitor{ m_sensor_type } };
-    std::unique_ptr<ActuatorController> m_actuator_ptr{ new ActuatorController{ m_actuator_type } };
+    std::unique_ptr<SensorMonitor> m_sensor_ptr;
+    std::unique_ptr<ActuatorController> m_actuator_ptr;
 
     public: 
-        Tank( SensorType, ActuatorType );        // constructor
-        uint32_t level() const;   
+        Tank( SensorType, ActuatorType );        
         SensorType sensor() const;
-        ActuatorType actuator() const;
+        ActuatorType actuator() const; 
+        uint32_t level() const;   
         void add_water( float ) const;
 };

@@ -6,7 +6,7 @@
 
 #include "devices.hpp"
 #include "sensorMonitor.hpp"
-#include "actuator.hpp"
+#include "actuatorController.hpp"
 #include "tank.hpp"
 
 Tank::Tank( SensorType sensor_type, ActuatorType actuator_type ) : 

@@ -4,7 +4,7 @@
 
 #include "devices.hpp"
 #include "sensorMonitor.hpp"
-#include "actuator.hpp"
+#include "actuatorController.hpp"
 #include "pot.hpp"
 #include "tank.hpp"
 

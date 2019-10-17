@@ -4,11 +4,20 @@
 #include "devices.hpp"
 #include "sensor.hpp"
 
-Sensor::Sensor( SensorType type) : m_type{ type }{}
+Sensor::Sensor( SensorType type) : m_type{ type }{
+    read_sensor_value = init_read_func( type );
+}
 
 int32_t Sensor::value() const 
 {
-    return read_sensor_value( );
+    if (read_sensor_value != nullptr)
+    {
+        return read_sensor_value();
+    } else {
+        std::cout << "No sensor connected\n";
+        return 0; 
+    } 
+
 }
 
 SensorType Sensor::type() const

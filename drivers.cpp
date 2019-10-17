@@ -1,7 +1,7 @@
 /*
-* This file is only included when building for Raspberry Pi and 
-* replaces devices.cpp. The wiringPi library
-* support only 32-bit Raspbian and no other platform. 
+* This file is only included when building for Raspberry Pi. 
+* The wiringPi library support only 32-bit Raspbian and 
+* no other platform. 
 */
 #include <cstdint>
 #include <iostream>
@@ -21,7 +21,7 @@ int16_t swap_endianess( int16_t data )
 }
 
 
-int32_t read_sensor_value( )
+int32_t i2c_read_sensor_value()
 {
     wiringPiSetup();
     int32_t fd = wiringPiI2CSetup( DEVICE_ADDRESS );

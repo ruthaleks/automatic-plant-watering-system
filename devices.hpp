@@ -1,13 +1,16 @@
 #pragma once
 
-enum class SensorType { ADA_MoistSensor,
+#include <cstdint>
+
+enum class SensorType { I2C_Sensor,
                         SIM_MoistSensor,
                         SIM_LoadSensor,
                         NO_Sensor };
 
-enum class ActuatorType { SIM_Pump,
+enum class ActuatorType { SIM_Switch,
+                          RELAY_Switch,
                           NO_Actuator };
 
-int32_t read_sensor_value( );
+auto init_read_func( SensorType ) -> int32_t (*) (void);
 
 

@@ -2,13 +2,13 @@
 #include <iostream>
 
 #include "devices.hpp"
-#include "sensor.hpp"
+#include "sensorMonitor.hpp"
 
-Sensor::Sensor( SensorType type) : m_type{ type }{
+SensorMonitor::SensorMonitor( SensorType type) : m_type{ type }{
     read_sensor_value = init_read_func( type );
 }
 
-int32_t Sensor::value() const 
+int32_t SensorMonitor::value() const 
 {
     if (read_sensor_value != nullptr)
     {
@@ -20,12 +20,8 @@ int32_t Sensor::value() const
 
 }
 
-SensorType Sensor::type() const
+SensorType SensorMonitor::type() const
 {
     return m_type;
 }
 
-uint32_t Sensor::threashold() const
-{
-    return m_threashold_value;
-}

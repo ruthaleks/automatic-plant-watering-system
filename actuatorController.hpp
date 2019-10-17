@@ -1,12 +1,14 @@
 #pragma once
 
-class Actuator 
+#include "devices.hpp"
+
+class ActuatorController
 {
     ActuatorType m_type;
     float m_rate_per_second{ 10 }; // default value [mm/s]
 
     public:
-        Actuator( ActuatorType );
+        ActuatorController( ActuatorType );
         void on() const;
         void off() const;
         ActuatorType type() const;

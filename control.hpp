@@ -1,3 +1,8 @@
 #pragma once
 
-int32_t control_routine( Pot &, Tank &);
+#include <cstdint>
+
+#include "tankManager.hpp"
+#include "potManager.hpp"
+
+int32_t control_routine( PotManager &, TankManager &);

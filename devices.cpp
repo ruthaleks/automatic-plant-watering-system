@@ -33,9 +33,7 @@ auto init_read_func( SensorType sensor) -> int32_t (*)(void)
     default:
         read = nullptr;
         break;
-
     }
-
     return read;
 }
 

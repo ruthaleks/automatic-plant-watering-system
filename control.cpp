@@ -3,13 +3,13 @@
 #include <iostream>
 
 #include "devices.hpp"
-#include "sensor.hpp"
-#include "actuator.hpp"
-#include "pot.hpp"
-#include "tank.hpp"
+#include "sensorMonitor.hpp"
+#include "actuatorController.hpp"
+#include "potManager.hpp"
+#include "tankManager.hpp"
 
 
-int32_t control_routine(Pot& pot, Tank& tank)
+int32_t control_routine(PotManager& pot, TankManager& tank)
 {   
     std::cout << "Start of control routine\n";
     

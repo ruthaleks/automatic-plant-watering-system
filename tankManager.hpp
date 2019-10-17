@@ -5,14 +5,14 @@
 #include "devices.hpp"
 #include "sensorMonitor.hpp"
 
-class Tank 
+class TankManager 
 {
     uint32_t m_water_level{}; // remaing water quantity in the tank 
     std::unique_ptr<SensorMonitor> m_sensor_ptr;
     std::unique_ptr<ActuatorController> m_actuator_ptr;
 
     public: 
-        Tank( SensorType, ActuatorType );        
+        TankManager( SensorType, ActuatorType );        
         SensorType sensor() const;
         ActuatorType actuator() const; 
         uint32_t level() const;   

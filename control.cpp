@@ -6,10 +6,10 @@
 #include "sensorMonitor.hpp"
 #include "actuatorController.hpp"
 #include "potManager.hpp"
-#include "tank.hpp"
+#include "tankManager.hpp"
 
 
-int32_t control_routine(PotManager& pot, Tank& tank)
+int32_t control_routine(PotManager& pot, TankManager& tank)
 {   
     std::cout << "Start of control routine\n";
     

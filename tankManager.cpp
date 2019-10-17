@@ -37,9 +37,8 @@ void TankManager::add_water(float amout_in_millilitre) const
     // TODO: Add a guard in case no actuator
     std::cout << "Asked amount: " << amout_in_millilitre << " millilitres\n";
     float time{ amout_in_millilitre / m_actuator_ptr->rate_per_second() };
-    m_actuator_ptr->on();
+    m_actuator_ptr->set_velocity( 1 );
     std::cout << "Pour for " << (uint32_t) time << " second(s) \n"; 
     std::this_thread::sleep_for(std::chrono::seconds((uint32_t)time));
-    m_actuator_ptr->off(); 
-    
+    m_actuator_ptr->set_velocity( 0 );     
 }

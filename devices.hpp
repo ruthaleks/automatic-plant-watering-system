@@ -12,5 +12,6 @@ enum class ActuatorType { SIM_Switch,
                           NO_Actuator };
 
 auto init_read_func( SensorType ) -> int32_t (*) (void);
+auto init_control_func( ActuatorType ) -> void (*) (int32_t);
 
 

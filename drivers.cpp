@@ -32,3 +32,15 @@ int32_t i2c_read_sensor_value()
 
     return swap_endianess( raw_data );    
 }
+#define PIN 7
+
+void relay_switch( int32_t on )
+{
+    wiringPiSetup();
+    pinMode(PIN, OUTPUT);
+    if (on > 0){
+        digitalWrite(PIN, HIGH);
+    } else {
+        digitalWrite(PIN, LOW);
+    }
+}

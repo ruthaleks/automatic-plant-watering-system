@@ -4,16 +4,14 @@
 #include "actuatorController.hpp"
 #include "devices.hpp"
 
-ActuatorController::ActuatorController( ActuatorType type) : m_type{ type }{}
-
-void ActuatorController::on() const 
+ActuatorController::ActuatorController( ActuatorType type) : m_type{ type }
 {
-    std::cout << "Pump on..\n";
+    control_actuator = init_control_func( type );
 }
 
-void ActuatorController::off() const
+void ActuatorController::set_velocity( int32_t vel ) const
 {
-    std::cout << "Pump off..\n";
+    control_actuator( vel );
 }
 
 ActuatorType ActuatorController::type() const

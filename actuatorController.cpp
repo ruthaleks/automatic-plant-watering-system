@@ -19,7 +19,12 @@ ActuatorType ActuatorController::type() const
     return m_type;
 }
 
-float ActuatorController::rate_per_second() const
+float ActuatorController::capacity() const
 {
-    return m_rate_per_second;
+    return m_capacity;
+}
+
+void ActuatorController::set_capacity( float value )
+{
+    m_capacity = value;
 }

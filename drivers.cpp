@@ -9,7 +9,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
-#include "adafruitSoilSensor.hpp"
+#include "parameters.hpp"
 #include "devices.hpp"
 
 
@@ -32,7 +32,6 @@ int32_t i2c_read_sensor_value()
 
     return swap_endianess( raw_data );    
 }
-#define PIN 1 // GPIO18 Physical pin 12 
 
 void relay_switch( int32_t on )
 {

@@ -6,16 +6,21 @@
 #include "sensorMonitor.hpp"
 #include "actuatorController.hpp"
 #include "tankManager.hpp"
+#include "parameters.hpp"
 #include "potManager.hpp"
 #include "control.hpp"
 
-int32_t main()
+int32_t main() 
 {
     std::cout << "** Start of main **\n";
     TankManager tank{ SensorType::SIM_LoadSensor, ActuatorType::RELAY_Switch }; 
     std::cout << "Created a new water tank\n";    
+    
+    tank.set_flow_rate( FLOW_RATE );
+    tank.set_water_amount( WATER_AMOUNT );
+
     PotManager pot{ SensorType::I2C_Sensor };
-    std::cout << "Created a new pot \n";
+    std::cout << "Created a new pot \n";    
 
 
    control_routine(pot, tank);

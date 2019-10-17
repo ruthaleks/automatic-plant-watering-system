@@ -32,13 +32,29 @@ ActuatorType TankManager::actuator() const
     return m_actuator_ptr->type();
 }
 
-void TankManager::add_water(float amout_in_millilitre) const
+void TankManager::set_flow_rate( int32_t value ) const
+{   
+    float cap = (float) value * 0.27; // convert from [ L/h ] to [ mL/s ]
+    std::cout << "The flow rate is set to: " << cap << "mL/s\n";
+    m_actuator_ptr->set_capacity( cap );
+}
+
+void TankManager::add_water() const
 {
-    // TODO: Add a guard in case no actuator
-    std::cout << "Asked amount: " << amout_in_millilitre << " millilitres\n";
-    float time{ amout_in_millilitre / m_actuator_ptr->rate_per_second() };
-    m_actuator_ptr->set_velocity( 1 );
-    std::cout << "Pour for " << (uint32_t) time << " second(s) \n"; 
-    std::this_thread::sleep_for(std::chrono::seconds((uint32_t)time));
-    m_actuator_ptr->set_velocity( 0 );     
+    if (m_actuator_ptr->type() == ActuatorType::NO_Actuator){
+         std::cout << "No actuator connected, no water added.. \n";
+    } else {
+        std::cout << "Amount of water poured: " << m_water_amount << "ml\n";
+        float time{ ((float) m_water_amount / m_actuator_ptr->capacity()) * 1000 };
+        m_actuator_ptr->set_velocity( 1 );
+        std::cout << "Pour for " << (uint32_t) time << " ms \n"; 
+        std::this_thread::sleep_for(std::chrono::milliseconds( (uint32_t) time));
+        m_actuator_ptr->set_velocity( 0 );     
+    }
+}
+
+void TankManager::set_water_amount(int32_t value)
+{
+    std::cout << "The water amount is set to: " << value << "ml\n";
+    m_water_amount = value;
 }

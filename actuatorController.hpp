@@ -7,12 +7,13 @@
 class ActuatorController
 {
     ActuatorType m_type;
-    float m_rate_per_second{ 10 }; // default value [mm/s]
+    float m_capacity{ 10.0 }; // e.g [ ml/s ]
     void (*control_actuator) ( int32_t ); // function pointer
 
     public:
         ActuatorController( ActuatorType );
         void set_velocity( int32_t ) const;
         ActuatorType type() const;
-        float rate_per_second() const;
+        float capacity() const;
+        void set_capacity( float );
 };

@@ -32,7 +32,7 @@ int32_t i2c_read_sensor_value()
 
     return swap_endianess( raw_data );    
 }
-#define PIN 7
+#define PIN 1 // GPIO18 Physical pin 12 
 
 void relay_switch( int32_t on )
 {

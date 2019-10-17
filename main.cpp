@@ -12,7 +12,7 @@
 int32_t main()
 {
     std::cout << "** Start of main **\n";
-    TankManager tank{ SensorType::SIM_LoadSensor, ActuatorType::SIM_Switch }; 
+    TankManager tank{ SensorType::SIM_LoadSensor, ActuatorType::RELAY_Switch }; 
     std::cout << "Created a new water tank\n";    
     PotManager pot{ SensorType::I2C_Sensor };
     std::cout << "Created a new pot \n";

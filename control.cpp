@@ -16,7 +16,7 @@ int32_t control_routine(PotManager& pot, TankManager& tank)
     std::cout << "Check if the soil is dry \n"; 
     if (pot.is_dry()){
         std::cout << "Soil is dry, need to add water \n";
-        tank.add_water( 10.0f );
+        tank.add_water( 50.0f );
     }
 
 

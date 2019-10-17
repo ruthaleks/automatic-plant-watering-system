@@ -5,11 +5,11 @@
 #include "devices.hpp"
 #include "sensorMonitor.hpp"
 #include "actuatorController.hpp"
-#include "pot.hpp"
+#include "potManager.hpp"
 #include "tank.hpp"
 
 
-int32_t control_routine(Pot& pot, Tank& tank)
+int32_t control_routine(PotManager& pot, Tank& tank)
 {   
     std::cout << "Start of control routine\n";
     

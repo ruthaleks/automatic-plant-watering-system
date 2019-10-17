@@ -6,7 +6,7 @@
 #include "sensorMonitor.hpp"
 #include "actuatorController.hpp"
 #include "tank.hpp"
-#include "pot.hpp"
+#include "potManager.hpp"
 #include "control.hpp"
 
 int32_t main()
@@ -14,7 +14,7 @@ int32_t main()
     std::cout << "** Start of main **\n";
     Tank tank{ SensorType::SIM_LoadSensor, ActuatorType::SIM_Switch }; 
     std::cout << "Created a new water tank\n";    
-    Pot pot{ SensorType::SIM_MoistSensor };
+    PotManager pot{ SensorType::SIM_MoistSensor };
     std::cout << "Created a new pot \n";
 
 

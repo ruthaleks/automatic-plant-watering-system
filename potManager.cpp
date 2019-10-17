@@ -3,13 +3,13 @@
 #include <memory>
 
 #include "devices.hpp"
-#include "pot.hpp"
+#include "potManager.hpp"
 #include "sensorMonitor.hpp"
 
 
-Pot::Pot( SensorType sensor_type) : m_sensor_ptr{ new SensorMonitor{sensor_type} }{}
+PotManager::PotManager( SensorType sensor_type) : m_sensor_ptr{ new SensorMonitor{sensor_type} }{}
 
-uint32_t Pot::humidity() const 
+uint32_t PotManager::humidity() const 
 {
     std::cout << "Read data from humidity sensor..\n";
     uint32_t v = m_sensor_ptr->value(); 
@@ -17,7 +17,7 @@ uint32_t Pot::humidity() const
     return v;
 }
 
-bool Pot::is_dry() const
+bool PotManager::is_dry() const
 {  
     if (m_sensor_ptr->type() == SensorType::NO_Sensor){
         return false;
@@ -29,12 +29,12 @@ bool Pot::is_dry() const
     return false;
 }
 
-SensorType Pot::sensor() const
+SensorType PotManager::sensor() const
 {
     return m_sensor_ptr->type();
 }
 
-void Pot::set_treashold( uint32_t value)
+void PotManager::set_treashold( uint32_t value)
 {
     m_threashold = value;
 }

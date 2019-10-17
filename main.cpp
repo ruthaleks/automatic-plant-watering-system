@@ -22,8 +22,10 @@ int32_t main()
     PotManager pot{ SensorType::I2C_Sensor };
     std::cout << "Created a new pot \n";    
 
+    pot.set_treashold( MOIST_TRESHOLD );
 
-   control_routine(pot, tank);
+
+    control_routine(pot, tank);
 
 
 

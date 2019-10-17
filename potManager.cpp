@@ -37,5 +37,6 @@ SensorType PotManager::sensor() const
 void PotManager::set_treashold( uint32_t value)
 {
     m_threashold = value;
+    std::cout << "The humidity threashold is set to: " << m_threashold << '\n';
 }
 

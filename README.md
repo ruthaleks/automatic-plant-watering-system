@@ -46,3 +46,7 @@ HX711 ADC: [*User guide*](https://www.electrokit.com/uploads/productfile/41016/h
 * SRD-05VDC-SL-C Relay module
 * Load-cell 10kg 
 * HX711 ADC for weigh scales 
+
+
+#TODO
+* Structure source code in subfolders

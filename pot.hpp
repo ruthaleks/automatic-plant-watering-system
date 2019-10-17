@@ -1,10 +1,16 @@
 #pragma once
 
+#include <cstdint>
+#include <memory>
+
+#include "devices.hpp"
+#include "sensorMonitor.hpp"
+
 class Pot
 {
     uint32_t m_volume{};     // water volume added to the pot during a certain time period
     SensorType m_sensor_type{};    
-    std::unique_ptr<Sensor> m_sensor_ptr{ new Sensor{ m_sensor_type } };
+    std::unique_ptr<SensorMonitor> m_sensor_ptr{ new SensorMonitor{ m_sensor_type } };
 
     uint32_t humidity() const;
     public:

@@ -5,7 +5,7 @@
 #include <thread>
 
 #include "devices.hpp"
-#include "sensor.hpp"
+#include "sensorMonitor.hpp"
 #include "actuator.hpp"
 #include "tank.hpp"
 

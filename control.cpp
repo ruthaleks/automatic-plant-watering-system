@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "devices.hpp"
-#include "sensor.hpp"
+#include "sensorMonitor.hpp"
 #include "actuator.hpp"
 #include "pot.hpp"
 #include "tank.hpp"

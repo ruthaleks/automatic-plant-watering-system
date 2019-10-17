@@ -1,6 +1,6 @@
 CC = g++
 CPPFLAGS = -std=c++17 -Wall -Werror -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
-SRC = main.cpp control.cpp pot.cpp tank.cpp sensor.cpp actuator.cpp devices.cpp
+SRC = main.cpp control.cpp pot.cpp tank.cpp sensorMonitor.cpp actuator.cpp devices.cpp
 OBJ = app
 
 PI_OBJ = appPi

@@ -3,7 +3,7 @@
 #include <cstdint>
 
 #include "devices.hpp"
-#include "sensor.hpp"
+#include "sensorMonitor.hpp"
 #include "actuator.hpp"
 #include "tank.hpp"
 #include "pot.hpp"

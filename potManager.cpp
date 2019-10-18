@@ -1,5 +1,8 @@
 #include <chrono>
 #include <cstdint>
+#include <cstring>
+#include <ctime>
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <numeric>
@@ -29,6 +32,7 @@ uint32_t PotManager::humidity() const
         sensor_data.end(), 0.0) / sensor_data.size(); 
 
     std::cout << "Current average humidity: " << average << '\n';
+    write_to_file( average );
     return (uint32_t) average;
 }
 
@@ -54,4 +58,17 @@ void PotManager::set_treashold( uint32_t value)
     m_threashold = value;
     std::cout << "The humidity threashold is set to: " << m_threashold << '\n';
 }
-
+void PotManager::write_to_file( float data ) const
+{
+    std::cout << "Writing data to file\n";
+    // Get the time stamp in the correct format
+    auto time =  std::chrono::system_clock::to_time_t( 
+        std::chrono::system_clock::now());
+    auto time_stamp = std::ctime( &time );
+    char *t = std::strtok(time_stamp, "\n");
+    
+    std::ofstream file;
+    file.open( "data.txt", std::fstream::app );
+    file << t << " Humidity: " << data << '\n';
+    file.close();
+}

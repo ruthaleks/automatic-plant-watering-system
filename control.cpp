@@ -13,6 +13,8 @@
 #include "tankManager.hpp"
 
 
+#define NO_ERROR 0
+// TODO: Fix error handling
 int32_t control_routine(PotManager& pot, TankManager& tank)
 {   
     std::cout << " ***Start of control routine ***\n";

@@ -24,9 +24,9 @@ int16_t swap_endianess( int16_t data )
 int32_t i2c_read_sensor_value()
 {
     wiringPiSetup();
-    int32_t fd = wiringPiI2CSetup( DEVICE_ADDRESS );
+    int32_t fd = wiringPiI2CSetup( I2C_DEVICE_ADDRESS );
 
-    wiringPiI2CWriteReg8( fd, BASE, CHANNEL_OFFSET );
+    wiringPiI2CWriteReg8( fd, I2C_BASE, I2C_CHANNEL_OFFSET );
     delay(10);
     int16_t raw_data = wiringPiI2CReadReg16( fd, 0x00 ); 
 

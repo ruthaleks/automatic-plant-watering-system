@@ -13,7 +13,7 @@
 int32_t main() 
 {
     std::cout << "** Start of main **\n";
-    TankManager tank{ SensorType::SIM_LoadSensor, ActuatorType::RELAY_Switch }; 
+    TankManager tank{ SensorType::SIM_LoadSensor, ActuatorType::NO_Actuator }; 
     std::cout << "Created a new water tank\n";    
     
     tank.set_flow_rate( FLOW_RATE );

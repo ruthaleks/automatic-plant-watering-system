@@ -42,7 +42,9 @@ void TankManager::set_flow_rate( int32_t value ) const
 void TankManager::add_water() const
 {
     if (m_actuator_ptr->type() == ActuatorType::NO_Actuator){
-         std::cout << "No actuator connected, no water added.. \n";
+        #ifdef DEBUG
+        std::cout << "No actuator connected, no water added.. \n";
+        #endif
     } else {
         std::cout << "Amount of water poured: " << m_water_amount << "ml\n";
         float time{ ((float) m_water_amount / m_actuator_ptr->capacity()) * 1000 };

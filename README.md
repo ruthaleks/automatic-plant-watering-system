@@ -47,6 +47,16 @@ HX711 ADC: [*User guide*](https://www.electrokit.com/uploads/productfile/41016/h
 * Load-cell 10kg 
 * HX711 ADC for weigh scales 
 
+# Concepts 
+* Function pointers
+* Smart pointers 
+* Scoped and unscoped enums 
+* Uniform initialization
+* rvalue-, lvalue- and universial referenses 
+* std::vector and arrays
+* Immutable variables and methods
+* Lambda expressions
+* Templates
 
-#TODO
+# TODO
 * Structure source code in subfolders

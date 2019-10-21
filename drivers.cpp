@@ -4,6 +4,7 @@
 * no other platform. 
 */
 #include <cstdint>
+#include <errno.h>
 #include <iostream>
 
 #include <wiringPi.h>
@@ -30,7 +31,9 @@ int32_t init_i2c()
 
 void init_relay_switch()
 {
-    wiringPiSetup();
+    int e = wiringPiSetup();
+    std::cout << e << '\n';
+    std::cout << errno << '\n';
     pinMode( PIN, OUTPUT );
 }
 

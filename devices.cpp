@@ -34,6 +34,7 @@ auto init_control_func( ActuatorType actuator) -> void (*)(int32_t)
         break;
     case ActuatorType::RELAY_Switch:
     #ifdef PI
+        init_relay_switch();
         control = &relay_switch;
     #else
         control = &sim_swich;
@@ -55,6 +56,7 @@ auto init_read_func( SensorType sensor) -> int32_t (*)(void)
     {
     case SensorType::I2C_Sensor:
     #ifdef PI
+        init_i2c();
         read = &i2c_read_sensor_value;
     #else
         read = &sim_read_sensor_value;

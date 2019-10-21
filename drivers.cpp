@@ -39,7 +39,12 @@ int32_t i2c_read_sensor_value( void )
 {
     wiringPiI2CWriteReg8( fd, I2C_BASE, I2C_CHANNEL_OFFSET );
     delay(10);
-    int16_t raw_data = wiringPiI2CReadReg16( fd, 0x00 ); 
+    int16_t raw_data = wiringPiI2CReadReg16( fd, 0x00 );
+
+    // if raw_data is negative number then an error has happend
+    if (raw_data < 0):
+        std::cout << " WiringPi returned an error, errno: " << errno << '\n';
+        return 0; 
 
     return swap_endianess( raw_data );    
 }

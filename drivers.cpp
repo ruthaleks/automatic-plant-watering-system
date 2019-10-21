@@ -13,7 +13,7 @@
 #include "parameters.hpp"
 #include "devices.hpp"
 
-static const int32_t FD;
+static int32_t fd;
 
 int16_t swap_endianess( int16_t data )
 {
@@ -22,11 +22,9 @@ int16_t swap_endianess( int16_t data )
     return ((b_low << 8) | b_high); 
 }
 
-int32_t init_i2c()
+void init_i2c()
 {
-//    wiringPiSetup();
-    FD = wiringPiI2CSetup( I2C_DEVICE_ADDRESS );
-    return fd;
+    fd =  wiringPiI2CSetup( I2C_DEVICE_ADDRESS );
 }
 
 void init_relay_switch()
@@ -39,9 +37,9 @@ void init_relay_switch()
 
 int32_t i2c_read_sensor_value( void )
 {
-    wiringPiI2CWriteReg8( FD, I2C_BASE, I2C_CHANNEL_OFFSET );
+    wiringPiI2CWriteReg8( fd, I2C_BASE, I2C_CHANNEL_OFFSET );
     delay(10);
-    int16_t raw_data = wiringPiI2CReadReg16( FD, 0x00 ); 
+    int16_t raw_data = wiringPiI2CReadReg16( fd, 0x00 ); 
 
     return swap_endianess( raw_data );    
 }

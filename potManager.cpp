@@ -9,6 +9,7 @@
 #include <thread>
 #include <vector>
 
+#include "lib/expected.h"
 
 #include "devices.hpp"
 #include "potManager.hpp"
@@ -17,18 +18,26 @@
 
 PotManager::PotManager( SensorType sensor_type) : m_sensor_ptr{ new SensorMonitor{sensor_type} }{}
 
-uint32_t PotManager::humidity() const 
+util::Expected<uint32_t> PotManager::humidity() const 
 {   
     // The sensor readings from a specified time period are collected
-    // and analysed  
+    // and an average value is calculated  
     std::vector<int32_t> sensor_data{};
     #ifdef DEBUG
     std::cout << "Read data from humidity sensor..\n";  
     #endif  
-    for (uint32_t n = 0; n < m_sample_number; n++){
-        sensor_data.push_back(m_sensor_ptr->value());
-        std::this_thread::sleep_for(std::chrono::seconds( m_sample_period ));
-    }
+    for (uint32_t n = 0; n < m_samples; n++){
+        // use emplace_back() when it is okay to call an explicit constructor, usally better perfomrnace and you can pass different data types in to the vector  
+        // use push_back() when an implicit constructor should be used, safer 
+        util::Expected<int32_t> value = m_sensor_ptr->value();
+        if (value.isValid()){
+            sensor_data.push_back( value.get() );
+            std::this_thread::sleep_for(std::chrono::seconds( m_sample_period ));
+        } else {
+            std::cout << "Failed reading from sensor\n";
+            return value; // return error
+        }
+    }   
     // calculate the average 
     float average = (float) std::accumulate(sensor_data.begin(), 
         sensor_data.end(), 0.0) / sensor_data.size(); 
@@ -41,14 +50,13 @@ uint32_t PotManager::humidity() const
 
 bool PotManager::is_dry() const
 {  
-    if (m_sensor_ptr->type() == SensorType::NO_Sensor){
-        return false;
+    util::Expected<uint32_t> hum = humidity();
+    if ( hum.isValid() ){
+        if ( hum.get() < m_threashold ) {
+            return true;  
+        }
     }
-    
-    if (humidity() < m_threashold ) {  
-        return true; // soil is dry
-    } 
-    return false;
+    return false; // soil is dry or sensor error 
 }
 
 SensorType PotManager::sensor() const

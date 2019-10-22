@@ -9,6 +9,7 @@
 
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#include "lib/expected.h"
 
 #include "parameters.hpp"
 #include "devices.hpp"
@@ -35,17 +36,19 @@ void init_relay_switch()
     pinMode( PIN, OUTPUT );
 }
 
-int32_t i2c_read_sensor_value( void )
+util::Expected<int32_t> i2c_read_sensor_value( void )
 {
     wiringPiI2CWriteReg8( fd, I2C_BASE, I2C_CHANNEL_OFFSET );
     delay(10);
     int16_t raw_data = wiringPiI2CReadReg16( fd, 0x00 );
 
     // if raw_data is negative number then an error has happend
-    if (raw_data < 0):
-        std::cout << " WiringPi returned an error, errno: " << errno << '\n';
-        return 0; 
-
+    if (raw_data < 0)
+    {
+        std::string errmsg{ "WiringPi returned an error with errno = "};
+        errmsg.append( std::to_string( errno ) );
+        return std::invalid_argument( *errmsg ); 
+    }
     return swap_endianess( raw_data );    
 }
 

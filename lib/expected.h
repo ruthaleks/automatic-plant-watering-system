@@ -150,6 +150,20 @@ namespace util
 			return false;
 		}
 
+		const char* exceptInfo const
+		{
+			try
+			{
+				if(!gotResult)
+					std::rethrow_exception(spam);
+			}
+			catch (const std::exception& e) 
+			{
+				return e.what();
+			}
+			return "No error";
+		}
+
 		friend class Expected<void>;
 	};
 

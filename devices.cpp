@@ -1,5 +1,7 @@
 #include <cstdint>
+#include <fstream>
 #include <iostream>
+#include <string>
 
 #include "lib/expected.h"
 
@@ -12,7 +14,20 @@
 
 util::Expected<int32_t> sim_read_sensor_value()
 {
-    return std::invalid_argument("test");    
+    std::string s;
+    std::ifstream file("sim_input.txt");
+    if( file.is_open() ){
+        std::getline(file, s);
+        util::Expected<int32_t> data{ std::stoi(s) };
+        if (data.isValid())
+        {  
+            if (data.get() < 0){
+                return std::invalid_argument(" Simulated sensor returned an error" );
+            }
+            return data;   
+        }
+    } 
+    return std::invalid_argument(" Can not open input file ");    
 }
 
 void sim_swich(int32_t on)

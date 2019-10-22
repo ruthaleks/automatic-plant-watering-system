@@ -1,23 +1,23 @@
 #include <cstdint>
 #include <iostream>
 
+#include "lib/expected.h"
+
 #include "devices.hpp"
 #include "sensorMonitor.hpp"
+
 
 SensorMonitor::SensorMonitor( SensorType type) : m_type{ type }{
     read_sensor_value = init_read_func( type );
 }
 
-int32_t SensorMonitor::value() const 
+util::Expected<int32_t> SensorMonitor::value() const 
 {
     if (read_sensor_value != nullptr)
     {
         return read_sensor_value();
-    } else {
-        std::cout << "No sensor connected\n";
-        return 0; 
     } 
-
+    return std::invalid_argument(" No sensor connected ");
 }
 
 SensorType SensorMonitor::type() const

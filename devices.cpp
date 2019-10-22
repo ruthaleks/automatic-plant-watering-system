@@ -1,6 +1,8 @@
 #include <cstdint>
 #include <iostream>
 
+#include "lib/expected.h"
+
 #include "devices.hpp"
 
 #ifdef PI
@@ -8,9 +10,9 @@
 #endif
 
 
-int32_t sim_read_sensor_value()
+util::Expected<int32_t> sim_read_sensor_value()
 {
-    return 10;    
+    return std::invalid_argument("test");    
 }
 
 void sim_swich(int32_t on)
@@ -48,9 +50,9 @@ auto init_control_func( ActuatorType actuator) -> void (*)(int32_t)
     return control;
 }
 
-auto init_read_func( SensorType sensor) -> int32_t (*)(void) 
+auto init_read_func( SensorType sensor) -> util::Expected<int32_t> (*)(void) 
 {    
-    int32_t (*read) ();
+    util::Expected<int32_t> (*read) ();
 
     switch (sensor)
     {

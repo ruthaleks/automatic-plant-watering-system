@@ -19,7 +19,8 @@ m_actuator_ptr{ new ActuatorController{ actuator_type } } {}
 uint32_t TankManager::level() const
 {   
     std::cout << "Read the pressure sensor data..\n";
-    return m_sensor_ptr->value(); 
+    //return m_sensor_ptr->value();
+    return 0; 
 }
 
 SensorType TankManager::sensor() const

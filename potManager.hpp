@@ -11,7 +11,7 @@ class PotManager
     uint32_t m_volume{};     // water volume added to the pot during a certain time period
     uint32_t m_threashold{ 600 };
     uint32_t m_sample_period{ 1 };  // [ s ]
-    uint32_t m_sample_number{ 3 }; 
+    uint32_t m_sample_number{ 60 }; 
     std::unique_ptr<SensorMonitor> m_sensor_ptr;
 
     void write_to_file( float ) const; 

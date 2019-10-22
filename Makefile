@@ -9,10 +9,10 @@ PI_OBJ = appPi
 all: build run
 
 build: $(SRC) drivers.cpp
-	$(CC) -o $(OBJ) $(SRC) $(CPPFLAGS)
+	$(CC) -o $(OBJ) $(SRC) $(CPPFLAGS) -DDEBUG
 
 pi: $(SRC) drivers.cpp
-	$(CC) -o $(PI_OBJ) $(SRC) drivers.cpp $(CPPFLAGS) -lwiringPi -DPI
+	$(CC) -o $(PI_OBJ) $(SRC) drivers.cpp $(CPPFLAGS) -lwiringPi -DPI -DDEBUG
 
 run: $(OBJ)
 	./$(OBJ) 

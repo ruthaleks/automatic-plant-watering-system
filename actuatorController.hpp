@@ -2,18 +2,22 @@
 
 #include <cstdint>
 
+#include "lib/expected.h"
+
 #include "devices.hpp"
 
 class ActuatorController
 {
     ActuatorType m_type;
-    float m_capacity{ 10.0 }; // e.g [ ml/s ]
-    void (*control_actuator) ( int32_t ); // function pointer
+    float m_capacity{ 0.0 }; 
+    void (*control_actuator) ( int32_t ); 
 
     public:
         ActuatorController( ActuatorType );
-        void set_velocity( int32_t ) const;
-        ActuatorType type() const;
+        void ctrl_actuator( int32_t ) const;
+        
         float capacity() const;
-        void set_capacity( float );
+        ActuatorType type() const;
+
+        util::Expected<void> set_capacity( float );
 };

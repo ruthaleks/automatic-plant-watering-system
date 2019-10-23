@@ -199,5 +199,19 @@ namespace util
 		bool wasSuccessful() const { return !spam; }
 		void get() const { if (!isValid()) std::rethrow_exception(spam); }
 		void suppress() {}
+		
+		const char* exceptInfo() const
+		{
+			try
+			{
+				if(!isValid())
+					std::rethrow_exception(spam);
+			}
+			catch (const std::exception& e) 
+			{
+				return e.what();
+			}
+			return "No error";
+		}
 	};
 }

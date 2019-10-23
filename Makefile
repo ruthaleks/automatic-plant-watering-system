@@ -8,7 +8,7 @@ PI_OBJ = appPi
 
 all: build run
 
-build: $(SRC) drivers.cpp
+build: $(SRC)
 	$(CC) -o $(OBJ) $(SRC) $(CPPFLAGS) -DDEBUG
 
 pi: $(SRC) drivers.cpp

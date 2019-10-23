@@ -75,7 +75,27 @@ TEST_CASE(" Test pot manager class", "[pot]")
     {
         PotManager pot{ SensorType::SIM_MoistSensor };
         REQUIRE( pot.sensor() == SensorType::SIM_MoistSensor );
-        
+
+        // ---------------------------- ------------//
+        // 
+        pot.set_treashold( 1000 );
+        REQUIRE( pot.threashold() == 1000 );
+
+        pot.set_treashold( 10 );
+        REQUIRE( pot.threashold() == 10 );
+        // ---------------------------- ------------//
+        // the default sampling time is set to 1
+        REQUIRE( pot.sampling_time() == 1);
+
+        pot.set_sampling_time( 10 );
+        REQUIRE(pot.sampling_time() == 10);
+        pot.set_sampling_time( 0 ); // can not set to 0
+        REQUIRE(pot.sampling_time() == 10);
+
+        pot.set_sampling_time( 54 );
+        REQUIRE(pot.sampling_time() == 54 );
+
+
     }
 
 }

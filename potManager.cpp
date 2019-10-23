@@ -6,6 +6,7 @@
 #include <thread>
 #include <vector>
 
+#include "lib/colors.hpp"
 #include "lib/expected.h"
 
 #include "devices.hpp"
@@ -35,11 +36,11 @@ util::Expected<uint32_t> PotManager::humidity() const
     #ifdef DEBUG
     std::cout << "Read data from humidity sensor..\n";  
     #endif 
-    for (uint32_t n = 0; n < m_samples; n++){
+    for (uint32_t n = 0; n < m_sampling_time; n++){
         util::Expected<int32_t> value = m_sensor_ptr->value();
         if (value.isValid()){
             sensor_data.push_back( value.get() );
-            std::this_thread::sleep_for(std::chrono::seconds( m_sample_period ));
+            std::this_thread::sleep_for(std::chrono::seconds( 1 )); // sample with 1Hz
         } else {
             return value; // return error
         }
@@ -54,9 +55,23 @@ util::Expected<uint32_t> PotManager::humidity() const
 }
 
 // getters
+uint32_t PotManager::sampling_time() const noexcept { return m_sampling_time; }
 SensorType PotManager::sensor() const { return m_sensor_ptr->type(); }
+uint32_t PotManager::threashold() const{ return m_threashold; }
 
 //setters
+void PotManager::set_sampling_time( uint32_t time )
+{
+    if( m_sensor_ptr->type() == SensorType::NO_Sensor){
+        std::cout << "#WRN Cannot set the sampling time for the selected sensor type\n";
+    } else if (time == 0) {
+        std::cout << BOLD(FRED("#ERR Cannot set the sampling time to zero.")) <<" The sample time is kept at: "<< m_sampling_time << "s\n";
+    } else {
+        m_sampling_time = time; 
+        std::cout << "The sampling time is set to: " << m_sampling_time << "s\n"; 
+    }
+}
+
 void PotManager::set_treashold( uint32_t value)
 {
     m_threashold = value;

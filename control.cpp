@@ -7,6 +7,7 @@
 #include <memory>
 #include <thread>
 
+#include "lib/colors.hpp"
 #include "lib/expected.h"
 
 #include "actuatorController.hpp"
@@ -21,7 +22,7 @@
 // TODO: Fix error handling
 int32_t control_routine(PotManager& pot, TankManager& tank)
 {   
-    std::cout << " ***Start of control routine ***\n";
+    std::cout << BOLD( " ***Start of control routine ***\n");
     
     int32_t err = NO_ERROR;
     while( !err )

@@ -150,7 +150,7 @@ namespace util
 			return false;
 		}
 
-		const char* exceptInfo const
+		const char* exceptInfo() const
 		{
 			try
 			{

@@ -2,6 +2,7 @@
 
 #include "catch.hpp"
 
+#include "../potManager.hpp"
 #include "../tankManager.hpp"
 
 TEST_CASE( "Test tankManager class", "[tank]" ) {
@@ -66,7 +67,17 @@ TEST_CASE( "Test tankManager class", "[tank]" ) {
         // ---------------------------- ------------//
         // TODO .level()
     }
+}
 
-
+TEST_CASE(" Test pot manager class", "[pot]")
+{
+    SECTION("Simulated sensor")
+    {
+        PotManager pot{ SensorType::SIM_MoistSensor };
+        REQUIRE( pot.sensor() == SensorType::SIM_MoistSensor );
+        
+    }
 
 }
+
+

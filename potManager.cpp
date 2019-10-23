@@ -20,21 +20,19 @@ PotManager::PotManager( SensorType sensor_type) : m_sensor_ptr{ new SensorMonito
 
 util::Expected<uint32_t> PotManager::humidity() const 
 {   
-    // The sensor readings from a specified time period are collected
+    // The sensor readings from a specified time period 
+    // (m_sample_period * m_samples) are collected
     // and an average value is calculated  
     std::vector<int32_t> sensor_data{};
     #ifdef DEBUG
     std::cout << "Read data from humidity sensor..\n";  
     #endif  
     for (uint32_t n = 0; n < m_samples; n++){
-        // use emplace_back() when it is okay to call an explicit constructor, usally better perfomrnace and you can pass different data types in to the vector  
-        // use push_back() when an implicit constructor should be used, safer 
         util::Expected<int32_t> value = m_sensor_ptr->value();
         if (value.isValid()){
             sensor_data.push_back( value.get() );
             std::this_thread::sleep_for(std::chrono::seconds( m_sample_period ));
         } else {
-            std::cout << "Failed reading from sensor\n";
             return value; // return error
         }
     }   

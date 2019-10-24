@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
+#include "../lib/expected.h"
 
 #include "../potManager.hpp"
 #include "../tankManager.hpp"
@@ -77,16 +78,48 @@ TEST_CASE(" Test pot manager class", "[pot]")
         REQUIRE( pot.sensor() == SensorType::SIM_MoistSensor );
 
         // ---------------------------- ------------//
-        // 
-        pot.set_treashold( 1000 );
-        REQUIRE( pot.threashold() == 1000 );
+        // default value check 
+        REQUIRE( pot.threashold() == 0 );
+        REQUIRE( pot.is_dry( 1 ) == false );
+        REQUIRE( pot.sampling_time() == 1);
+        REQUIRE( pot.max() == 0);
+        REQUIRE( pot.min() == 0);
 
+        //-------------------------------------------//
+        // safety check, 
         pot.set_treashold( 10 );
-        REQUIRE( pot.threashold() == 10 );
+        REQUIRE( pot.threashold() == 0 );
+        REQUIRE( pot.is_dry( 1 ) == false );
+    
+        //-------------------------------------------//
+        // set min max range
+        pot.set_sensor_minmax(200, 2000);
+        REQUIRE( pot.max() == 2000 );
+        REQUIRE( pot.min() == 200 );
+        REQUIRE( pot.is_dry( 300 ) == false);
+        REQUIRE( pot.is_dry( 100 ) == false);
+         
+        pot.set_sensor_minmax(1000, 100); // reversed min max
+        REQUIRE( pot.max() == 1000 );
+        REQUIRE( pot.min() == 100 ); 
+        REQUIRE( pot.is_dry( 800 ) == false);
+        REQUIRE( pot.is_dry( 100 ) == false);
+        
+        //-------------------------------------------//
+        // test of threashold
+        pot.set_sensor_minmax(800, 500);
+        pot.set_treashold( 600 );
+        REQUIRE( pot.threashold() == 600 );
+
+        pot.set_treashold( 100 ); // below min value
+        REQUIRE( pot.threashold() == 600 );
+
+        pot.set_treashold( 500 );
+        REQUIRE( pot.threashold() == 500 );
+
         // ---------------------------- ------------//
         // the default sampling time is set to 1
-        REQUIRE( pot.sampling_time() == 1);
-
+    
         pot.set_sampling_time( 10 );
         REQUIRE(pot.sampling_time() == 10);
         pot.set_sampling_time( 0 ); // can not set to 0
@@ -94,8 +127,17 @@ TEST_CASE(" Test pot manager class", "[pot]")
 
         pot.set_sampling_time( 54 );
         REQUIRE(pot.sampling_time() == 54 );
-
-
+        // ---------------------------- ------------//
+        // test is dry
+        pot.set_sensor_minmax(800, 500);
+        pot.set_treashold( 700 );
+        pot.set_sampling_time( 3 ); // choose a short period 
+        
+        REQUIRE( pot.is_dry( 499 ) == false ); // below min
+        REQUIRE( pot.is_dry( 501 ) == true ); // above min
+        REQUIRE( pot.is_dry( 500 ) == true  ); // below threashold
+        REQUIRE( pot.is_dry( 700 ) == false ); // on threashold
+        REQUIRE( pot.is_dry( 1000) == false ); // above max 
     }
 
 }

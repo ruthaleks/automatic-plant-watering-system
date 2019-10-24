@@ -28,9 +28,6 @@ int32_t control_routine(PotManager& pot, TankManager& tank)
     bool err = false;
     while( !err )
     {
-        #ifdef DEBUG
-        std::cout << "Measure the humidity of the soil \n"; 
-        #endif
         util::Expected<int32_t> current_humidity = pot.humidity();
         if (current_humidity.isValid())
         {
@@ -69,6 +66,9 @@ void write_to_file( T data )
     file.open( "data.txt", std::fstream::app );
     file << t << " Humidity: " << data << '\n';
     file.close();
+    #ifdef DEBUG
+    print::ok_msg( "Data written to file \n");
+    #endif
 }
 
 

@@ -50,7 +50,8 @@ util::Expected<int32_t> PotManager::humidity() const
     float average{ (float) std::accumulate(sensor_data.begin(), 
         sensor_data.end(), 0.0) / sensor_data.size() }; 
     #ifdef DEBUG
-    std::cout << "Current average humidity: " << average << '\n';
+    print::ok_msg( "Current average humidity: " );
+    std::cout << average << '\n';
     #endif
     return (int32_t) average;
 }

@@ -28,24 +28,26 @@ int32_t control_routine(PotManager& pot, TankManager& tank)
     bool err = false;
     while( !err )
     {
-        util::Expected<int32_t> current_humidity = pot.humidity();
+        util::Expected<uint32_t> current_humidity = pot.humidity();
+        
         if (current_humidity.isValid())
         {
             write_to_file( current_humidity.get() );
-        } else {
-            print::error_msg( current_humidity.exceptInfo() );
-        }
-
-        if (pot.is_dry( current_humidity )){
-            // is_dry() return false if the reading failed
+            if (pot.is_dry( current_humidity.get() )){
             
             #ifdef DEBUG
             std::cout << "Soil is dry, need to add water \n";
             #endif
 
             tank.add_water();
+            }
+
+        } else {
+            print::error_msg( current_humidity.exceptInfo() );
         }
+
         std::this_thread::sleep_for(std::chrono::minutes( t ));
+        //err = true;
     }
     return 0;
 }

@@ -26,6 +26,7 @@ int32_t main()
     PotManager pot{ SensorType::I2C_Sensor };
     print::ok_msg("New pot manager initialized.\n");    
 
+    pot.set_sensor_minmax( MIN_MOIST_READING, MAX_MOIST_READING );
     pot.set_treashold( MOIST_TRESHOLD );
     pot.set_sampling_time( 3 );
 

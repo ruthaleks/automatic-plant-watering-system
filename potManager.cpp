@@ -52,7 +52,7 @@ util::Expected<int32_t> PotManager::humidity() const
     #ifdef DEBUG
     std::cout << "Current average humidity: " << average << '\n';
     #endif
-    return (uint32_t) average;
+    return (int32_t) average;
 }
 
 // getters

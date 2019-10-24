@@ -6,5 +6,5 @@
 
 void init_i2c( void );
 void init_relay_switch( void );
-util::Expected<int32_t> i2c_read_sensor_value( void );
+util::Expected<uint32_t> i2c_read_sensor_value( void );
 void relay_switch( int32_t );

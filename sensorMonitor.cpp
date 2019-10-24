@@ -11,7 +11,7 @@ SensorMonitor::SensorMonitor( SensorType type) : m_type{ type }{
     read_sensor_value = init_read_func( type );
 }
 
-util::Expected<int32_t> SensorMonitor::value() const 
+util::Expected<uint32_t> SensorMonitor::value() const 
 {
     if (read_sensor_value != nullptr)
     {

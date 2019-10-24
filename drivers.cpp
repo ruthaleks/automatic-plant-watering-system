@@ -34,7 +34,7 @@ void init_relay_switch()
     pinMode( PIN, OUTPUT );
 }
 
-util::Expected<int32_t> i2c_read_sensor_value( void )
+util::Expected<uint32_t> i2c_read_sensor_value( void )
 {
     wiringPiI2CWriteReg8( fd, I2C_BASE, I2C_CHANNEL_OFFSET );
     delay(10);
@@ -49,7 +49,11 @@ util::Expected<int32_t> i2c_read_sensor_value( void )
     }
 
     int32_t data = swap_endianess( raw_data );
-    return data;    
+   
+    if (data < 0) {
+        return std::invalid_argument("Negative sensor value after endianess swap.")
+    }
+    return ( uint32_t ) data;    
 }
 
 void relay_switch( int32_t on )

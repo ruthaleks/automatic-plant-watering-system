@@ -15,7 +15,7 @@
 #endif
 
 
-util::Expected<int32_t> sim_read_sensor_value()
+util::Expected<uint32_t> sim_read_sensor_value()
 {
     std::string s;
     std::ifstream file("sim_input.txt");
@@ -25,11 +25,11 @@ util::Expected<int32_t> sim_read_sensor_value()
         s = std::regex_replace(s, std::regex("^ +| +$|( ) +"), "$1"); 
         if( std::regex_match(s, std::regex("[(-|+)|][0-9]+") ))
         { 
-            util::Expected<int32_t> data{std::stoi( s )};
-            if (data.get() < 0){
+            int32_t data{std::stoi( s )};
+            if (data < 0){
                 return std::invalid_argument("Simulated sensor returned an error.\n" );
             }
-            return data;   
+            return ( uint32_t ) data;   
         }
     } 
     return std::invalid_argument("Can not open input file.\n");    
@@ -71,9 +71,9 @@ auto init_control_func( ActuatorType actuator) -> void (*)(int32_t)
     return control;
 }
 
-auto init_read_func( SensorType sensor) -> util::Expected<int32_t> (*)(void) 
+auto init_read_func( SensorType sensor) -> util::Expected<uint32_t> (*)(void) 
 {    
-    util::Expected<int32_t> (*read) ();
+    util::Expected<uint32_t> (*read) ();
 
     switch (sensor)
     {

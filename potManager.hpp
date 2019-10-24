@@ -10,17 +10,20 @@
 
 class PotManager
 {
-    uint32_t m_volume{};     // water volume added to the pot during a certain time period
+    uint32_t m_sampling_time{ 1 }; // [s]
+    std::unique_ptr<SensorMonitor> m_sensor_ptr{};
     uint32_t m_threashold{ 600 };
-    uint32_t m_sample_period{ 1 };  // [ s ]
-    uint32_t m_samples{ 3 }; 
-    std::unique_ptr<SensorMonitor> m_sensor_ptr;
+    uint32_t m_volume{};     // keep track of how much water was added Not implemmente yet!
 
-    void write_to_file( float ) const; 
     public:
-        PotManager( SensorType );            // constructor
+        PotManager( SensorType );            
+        bool is_dry( util::Expected<uint32_t> ) const; 
         util::Expected<uint32_t> humidity() const;
-        bool is_dry() const; // returns true if the spoil  in the pot is dry
+
+        uint32_t sampling_time() const noexcept;
         SensorType sensor() const;
+        uint32_t threashold() const;
+        
+        void set_sampling_time( uint32_t );
         void set_treashold( uint32_t );
 };

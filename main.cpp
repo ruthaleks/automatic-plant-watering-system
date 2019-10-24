@@ -1,28 +1,31 @@
-#include <memory>
-#include <iostream>
 #include <cstdint>
+#include <iostream>
+#include <memory>
 
-#include "devices.hpp"
-#include "sensorMonitor.hpp"
+#include "lib/colors.hpp"
+
 #include "actuatorController.hpp"
-#include "tankManager.hpp"
+#include "control.hpp"
+#include "devices.hpp"
 #include "parameters.hpp"
 #include "potManager.hpp"
-#include "control.hpp"
+#include "sensorMonitor.hpp"
+#include "tankManager.hpp"
 
 int32_t main() 
 {
-    std::cout << "** Start of main **\n";
+    std::cout << BOLD("** Program starts **\n");
     TankManager tank{ SensorType::SIM_LoadSensor, ActuatorType::NO_Actuator }; 
-    std::cout << "Created a new water tank\n";    
+    std::cout << FGRN("New tank manager initiated.\n");    
     
     tank.set_flow_rate( FLOW_RATE );
     tank.set_water_amount( WATER_AMOUNT );
 
     PotManager pot{ SensorType::I2C_Sensor };
-    std::cout << "Created a new pot \n";    
+    std::cout << FGRN("New pot manager initiated. \n");    
 
     pot.set_treashold( MOIST_TRESHOLD );
+    pot.set_sampling_time( 3 );
 
 
     control_routine(pot, tank);

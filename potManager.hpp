@@ -17,8 +17,8 @@ class PotManager
 
     public:
         PotManager( SensorType );            
-        bool is_dry( util::Expected<uint32_t> ) const; 
-        util::Expected<uint32_t> humidity() const;
+        bool is_dry( util::Expected<int32_t> ) const; 
+        util::Expected<int32_t> humidity() const;
 
         uint32_t sampling_time() const noexcept;
         SensorType sensor() const;

@@ -17,7 +17,7 @@ util::Expected<int32_t> SensorMonitor::value() const
     {
         return read_sensor_value();
     } 
-    return std::invalid_argument(" No sensor connected ");
+    return std::invalid_argument("No sensor connected.\n");
 }
 
 SensorType SensorMonitor::type() const

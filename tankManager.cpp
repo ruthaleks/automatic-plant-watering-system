@@ -5,6 +5,7 @@
 #include <thread>
 
 #include "lib/expected.h"
+#include "lib/print.hpp"
 
 #include "actuatorController.hpp"
 #include "devices.hpp"
@@ -21,7 +22,7 @@ uint32_t TankManager::add_water() const
     if( m_actuator_ptr->type() == ActuatorType::NO_Actuator)
     {
         #ifdef DEBUG 
-        std::cout << "#WRN Cannot add water with the selected actuator type\n";
+        print::wrn_msg( "Cannot add water with the selected actuator type\n");
         #endif
         return 0;
     }
@@ -57,20 +58,22 @@ void TankManager::set_flow_rate( int32_t value ) const
 {   
     float cap = (float) value * (1000.0f/3600.0f); 
     util::Expected<void> res{ m_actuator_ptr->set_capacity( cap ) };
-    if (!res.isValid())
-        std::cout << res.exceptInfo() << '\n';
-    else
-        std::cout << "The flow rate is set to: " << cap << "mL/s\n";
-    
+    if (!res.isValid()){
+        print::wrn_msg( res.exceptInfo() );
+    } else {
+        print::ok_msg( "The flow rate is set to: ");
+        std::cout << cap << "mL/s\n";
+    }
 }
 
 void TankManager::set_water_amount(uint32_t value)
 // when the plant is dry a water amount (specified by the input) is poured in to the plant
 {
     if ( m_actuator_ptr->type() == ActuatorType::NO_Actuator ){
-        std::cout << "#WRN Cannot set the water amount for selected actuator type\n";
+        print::wrn_msg( "Cannot set the water amount for selected actuator type\n" );
     } else {
-        std::cout << "The water amount is set to: " << value << "ml\n";
+        print::ok_msg( "The water amount is set to: ");
+        std::cout << value << "ml\n";
         m_water_amount = value;
     }
 }

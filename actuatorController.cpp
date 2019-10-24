@@ -25,7 +25,8 @@ ActuatorType ActuatorController::type() const { return m_type; }
 util::Expected<void> ActuatorController::set_capacity( float value )
 {
     if ( m_type == ActuatorType::NO_Actuator)
-        return std::domain_error("#WRN Cannot set the the capacity for selected actuator type");
+        return std::domain_error("Cannot set the the capacity for selected actuator type\n");
+
     m_capacity = value;
     return {};
 }

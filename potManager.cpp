@@ -6,8 +6,9 @@
 #include <thread>
 #include <vector>
 
-#include "lib/colors.hpp"
 #include "lib/expected.h"
+#include "lib/print.hpp"
+
 
 #include "devices.hpp"
 #include "potManager.hpp"
@@ -17,18 +18,18 @@
 PotManager::PotManager( SensorType sensor_type) :
  m_sensor_ptr{ new SensorMonitor{sensor_type} }{}
 
-bool PotManager::is_dry( util::Expected<uint32_t> hum ) const
+bool PotManager::is_dry( util::Expected<int32_t> hum ) const
 // checks the sensor reading if the soil is dry and return true, else false 
 {  
     if ( hum.isValid() ){
-        if ( hum.get() < m_threashold ) {
+        if ( (uint32_t) hum.get() < m_threashold ) {
             return true;  
         }
     }
     return false; // soil is dry or sensor error 
 }
 
-util::Expected<uint32_t> PotManager::humidity() const 
+util::Expected<int32_t> PotManager::humidity() const 
 // The sensor readings from a specified time period (m_sample_period * m_samples) are collected
 // and an average value is calculated  
 {   
@@ -63,17 +64,20 @@ uint32_t PotManager::threashold() const{ return m_threashold; }
 void PotManager::set_sampling_time( uint32_t time )
 {
     if( m_sensor_ptr->type() == SensorType::NO_Sensor){
-        std::cout << "#WRN Cannot set the sampling time for the selected sensor type\n";
+        print::wrn_msg( "Cannot set the sampling time for the selected sensor type\n");
     } else if (time == 0) {
-        std::cout << BOLD(FRED("#ERR Cannot set the sampling time to zero.")) <<" The sample time is kept at: "<< m_sampling_time << "s\n";
+        print::error_msg("Cannot set the sampling time to zero.");
+        std::cout << "The sample time is kept at: "<< m_sampling_time << "s\n";
     } else {
         m_sampling_time = time; 
-        std::cout << "The sampling time is set to: " << m_sampling_time << "s\n"; 
+        print::ok_msg( "The sampling time is set to: ");
+        std::cout << m_sampling_time << "s\n"; 
     }
 }
 
 void PotManager::set_treashold( uint32_t value)
 {
     m_threashold = value;
-    std::cout << "The humidity threashold is set to: " << m_threashold << '\n';
+    print::ok_msg( "The humidity threashold is set to: ");
+    std::cout << m_threashold << '\n';
 }

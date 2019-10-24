@@ -4,7 +4,9 @@
 #include <string>
 #include <regex>
 
+#include "lib/colors.hpp"
 #include "lib/expected.h"
+#include "lib/print.hpp"
 
 #include "devices.hpp"
 
@@ -25,12 +27,12 @@ util::Expected<int32_t> sim_read_sensor_value()
         { 
             util::Expected<int32_t> data{std::stoi( s )};
             if (data.get() < 0){
-                return std::invalid_argument(" Simulated sensor returned an error" );
+                return std::invalid_argument("Simulated sensor returned an error.\n" );
             }
             return data;   
         }
     } 
-    return std::invalid_argument(" Can not open input file ");    
+    return std::invalid_argument("Can not open input file.\n");    
 }
 
 void sim_swich(int32_t on)
@@ -57,6 +59,7 @@ auto init_control_func( ActuatorType actuator) -> void (*)(int32_t)
         init_relay_switch();
         control = &relay_switch;
     #else
+        print::wrn_msg("Using simulated switch function.\n");
         control = &sim_swich;
     #endif
     break;
@@ -79,6 +82,7 @@ auto init_read_func( SensorType sensor) -> util::Expected<int32_t> (*)(void)
         init_i2c();
         read = &i2c_read_sensor_value;
     #else
+        print::wrn_msg("Using simulated sensor read function.\n");
         read = &sim_read_sensor_value;
     #endif
         break;

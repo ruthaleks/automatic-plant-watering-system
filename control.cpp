@@ -9,8 +9,10 @@
 
 #include "lib/colors.hpp"
 #include "lib/expected.h"
+#include "lib/print.hpp"
 
 #include "actuatorController.hpp"
+#include "control.hpp"
 #include "devices.hpp"
 #include "parameters.hpp"
 #include "potManager.hpp"
@@ -18,36 +20,41 @@
 #include "tankManager.hpp"
 
 
-#define NO_ERROR 0
-// TODO: Fix error handling
 int32_t control_routine(PotManager& pot, TankManager& tank)
 {   
-    std::cout << BOLD( " ***Start of control routine ***\n");
+    std::cout << BOLD( "** Beginning control routine **\n");
     
-    int32_t err = NO_ERROR;
+    const uint32_t t = CONTROL_PERIOD; 
+    bool err = false;
     while( !err )
     {
-    #ifdef DEBUG
-        std::cout << "Check if the soil is dry \n"; 
-    #endif
+        #ifdef DEBUG
+        std::cout << "Measure the humidity of the soil \n"; 
+        #endif
         util::Expected<int32_t> current_humidity = pot.humidity();
+        if (current_humidity.isValid())
+        {
+            write_to_file( current_humidity.get() );
+        } else {
+            print::error_msg( current_humidity.exceptInfo() );
+        }
+
         if (pot.is_dry( current_humidity )){
+            // is_dry() return false if the reading failed
+            
             #ifdef DEBUG
             std::cout << "Soil is dry, need to add water \n";
             #endif
+
             tank.add_water();
         }
-        int32_t t = CONTROL_PERIOD * 60;
-        #ifdef DEBUG
-        std::cout << "Wait for " << t << "s\n";
-        #endif
-        err = 1;
-        //std::this_thread::sleep_for(std::chrono::seconds( t ));
+        std::this_thread::sleep_for(std::chrono::minutes( t ));
     }
     return 0;
 }
 
-void write_to_file( float data ) 
+template < typename T>
+void write_to_file( T data ) 
 {
     #ifdef DEBUG
     std::cout << "Writing data to file\n";

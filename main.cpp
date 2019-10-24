@@ -16,13 +16,13 @@ int32_t main()
 {
     std::cout << BOLD("** Program starts **\n");
     TankManager tank{ SensorType::SIM_LoadSensor, ActuatorType::NO_Actuator }; 
-    std::cout << FGRN("New tank manager initiated.\n");    
+    std::cout << FGRN("New tank manager initialized.\n");    
     
     tank.set_flow_rate( FLOW_RATE );
     tank.set_water_amount( WATER_AMOUNT );
 
     PotManager pot{ SensorType::I2C_Sensor };
-    std::cout << FGRN("New pot manager initiated. \n");    
+    std::cout << FGRN("New pot manager initialized. \n");    
 
     pot.set_treashold( MOIST_TRESHOLD );
     pot.set_sampling_time( 3 );

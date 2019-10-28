@@ -51,7 +51,7 @@ util::Expected<uint32_t> i2c_read_sensor_value( void )
     int32_t data = swap_endianess( raw_data );
    
     if (data < 0) {
-        return std::invalid_argument("Negative sensor value after endianess swap.")
+        return std::invalid_argument("Negative sensor value after endianess swap.");
     }
     return ( uint32_t ) data;    
 }

@@ -17,7 +17,7 @@
 int32_t main() 
 {
     std::cout << BOLD("** Program starts **\n");
-    TankManager tank{ SensorType::SIM_LoadSensor, ActuatorType::RELAY_Switch }; 
+    TankManager tank{ SensorType::NO_Sensor, ActuatorType::RELAY_Switch }; 
     print::ok_msg("New tank manager initialized.\n");
     
     tank.set_flow_rate( FLOW_RATE );

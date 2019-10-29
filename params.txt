@@ -1,0 +1,19 @@
+System parameter file, it is not allowed to change in the file other than the values. The program will parse input until "/", leading and trailing spaces will be ignored. 
+1                       // control period [min]
+100                     // water amount [ ml ]
+500                     // moist threshold []
+
+/* ADAFRUIT STEMMA I2C SOIL SENSOR  */
+#define I2C_DEVICE_ADDRESS 0x36
+#define I2C_BASE           0x0F
+#define I2C_CHANNEL_OFFSET 0x10
+#define MAX_MOIST_READING  2000
+#define MIN_MOIST_READING  200
+
+/* DC WATER PUMP */
+#define FLOW_RATE           80   // Flow rate [ L/h ] 
+#define PIN                 1    // GPIO18, Physical pin 12
+
+
+
+

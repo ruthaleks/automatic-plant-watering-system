@@ -26,7 +26,11 @@ util::Expected<int32_t> parse_param( uint32_t target_row, const char* file_name=
     std::ifstream file(file_name);
     if(file.is_open()){
         uint32_t current_row{0};
-        while (current_row != target_row && getline(file, line)){ current_row++; }
+        while (current_row != target_row && getline(file, line))
+        { 
+            current_row++; 
+        }
+        file.close();
         if ( current_row == target_row){
             //remove leading spaces and trailing chars 
             std::regex r_leading_spaces("^[\\s]*");
@@ -67,21 +71,24 @@ util::Expected<int32_t> parse_param( uint32_t target_row, const char* file_name=
 */
 void set_params(TankManager& tank, PotManager& pot) noexcept
 {
+    bool ok{true};
+    // TODO Handle all sensor types 
+    // Handle negative inputs 
     util::Expected<int32_t> param{
          parse_param(static_cast<uint32_t>(Param::flow_rate))};
     if (param.isValid()){
         tank.set_flow_rate(param.get());
     } else {
-        print::error_msg("Could not set the flow rate\n");
-        print::error_msg(param.exceptInfo());
+        print::wrn_msg("Could not set the flow rate\n");
+        print::wrn_msg(param.exceptInfo());
     }
 
     param = parse_param(static_cast<uint32_t>(Param::water_amount));
     if (param.isValid()){
         tank.set_water_amount(static_cast<uint32_t>(param.get()));
     } else {
-        print::error_msg("Could not set the water amount\n");
-        print::error_msg(param.exceptInfo());
+        print::wrn_msg("Could not set the water amount\n");
+        print::wrn_msg(param.exceptInfo());
     }
 
     param = parse_param(static_cast<uint32_t>(Param::min_moist_reading));
@@ -92,6 +99,7 @@ void set_params(TankManager& tank, PotManager& pot) noexcept
         static_cast<uint32_t>(param2.get()));
     } else {
         print::error_msg("Could not set the sensor range\n");
+        ok = false;
         if(!param.isValid())
             print::error_msg(param.exceptInfo());
         if(!param2.isValid())
@@ -104,6 +112,7 @@ void set_params(TankManager& tank, PotManager& pot) noexcept
     } else {
         print::error_msg("Could not set the humidity threashold\n");
         print::error_msg(param.exceptInfo());
+        ok=false;
     }
 
     param = parse_param(static_cast<uint32_t>(Param::sampling_time));
@@ -112,5 +121,8 @@ void set_params(TankManager& tank, PotManager& pot) noexcept
     } else {
         print::error_msg("Could not set the sampling time for the humidity sensor\n");
         print::error_msg(param.exceptInfo());
+    }
+    if (!ok){
+        exit(EXIT_FAILURE);
     }
 }

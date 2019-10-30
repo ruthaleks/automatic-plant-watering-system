@@ -16,5 +16,5 @@ enum class Param { control_period = 2,
                     sampling_time };
 
 
-
+util::Expected<int32_t> parse_param(uint32_t, const char*) noexcept;
 void set_params( TankManager&, PotManager& ) noexcept;

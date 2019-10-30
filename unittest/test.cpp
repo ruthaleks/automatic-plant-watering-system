@@ -6,7 +6,6 @@
 
 #include "../potManager.hpp"
 #include "../tankManager.hpp"
-#include "../readParams.hpp"
 
 TEST_CASE( "Test tankManager class", "[tank]" ) {
 
@@ -144,8 +143,9 @@ TEST_CASE(" Test pot manager class", "[pot]")
 
 }
 
-TEST_CASE("Test of readParams function", "[read]"){
-util::Expected<int32_t> parse_param( uint32_t, const char* );
+TEST_CASE("Test of parse_param function", "[read]"){
+#include "../parseParams.hpp"
+
 const char* file_name = "unittest/unittest_params.txt";
     
     SECTION("incorrect params.txt path") {

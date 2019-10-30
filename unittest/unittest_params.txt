@@ -1,0 +1,13 @@
+System parameter file, it is not allowed to change in the file other than the values. The program will parse input by removing leading trailing whitespaces. 
+1                       // standard
+      100                     // leading and trailing whitespaces
+   500// no space after value
+    -465     // test of negative values
+-545// test of negative values
+    +545// test of positive values with a plus sign
++348   // tes of positive values with a plus sign
+    0x36 // hex values
+0xabF1f // hex values
+
+  ahj100 // invalid number
++100a // invalid number

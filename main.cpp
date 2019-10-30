@@ -9,8 +9,8 @@
 #include "control.hpp"
 #include "devices.hpp"
 #include "parameters.hpp"
+#include "parseParams.hpp"
 #include "potManager.hpp"
-#include "readParams.hpp"
 #include "sensorMonitor.hpp"
 #include "tankManager.hpp"
 
@@ -21,11 +21,7 @@ int32_t main()
     TankManager tank{ SensorType::NO_Sensor, ActuatorType::RELAY_Switch }; 
     print::ok_msg("New tank manager initialized.\n");
 
-    util::Expected<int32_t> res{ read_param(Param::control_period) };
-
-    if(res.isValid()) 
-        std::cout << "control period: " << res.get() << '\n';
-
+   // set_param(Param::control_period);
 
     tank.set_flow_rate( FLOW_RATE );
     tank.set_water_amount( WATER_AMOUNT );

@@ -10,9 +10,11 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "lib/expected.h"
+#include "lib/print.hpp"
 
-#include "parameters.hpp"
 #include "devices.hpp"
+#include "parseParams.hpp"
+#include "parameters.hpp"
 
 static int32_t fd;
 
@@ -24,8 +26,17 @@ int16_t swap_endianess( int16_t data )
 }
 
 void init_i2c()
-{
-    fd =  wiringPiI2CSetup( I2C_DEVICE_ADDRESS );
+{   
+    util::Expected<int32_t> dev_addr{
+        parse_param(static_cast<uint32_t>(Param::i2c_device_address))};
+    if(dev_addr.isValid()){
+        fd =  wiringPiI2CSetup( dev_addr.get() );
+    } else {
+        print::error_msg("The I2C device address could not be set\n");
+        print::error_msg(dev_addr.exceptInfo());
+        exit(EXIT_FAILURE);
+    }
+    
 }
 
 void init_relay_switch()

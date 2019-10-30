@@ -4,6 +4,7 @@
 #include "catch.hpp"
 #include "../lib/expected.h"
 
+#include "../parseParams.hpp"
 #include "../potManager.hpp"
 #include "../tankManager.hpp"
 
@@ -144,7 +145,6 @@ TEST_CASE(" Test pot manager class", "[pot]")
 }
 
 TEST_CASE("Test of parse_param function", "[read]"){
-#include "../parseParams.hpp"
 
 const char* file_name = "unittest/unittest_params.txt";
     

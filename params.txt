@@ -3,19 +3,10 @@ System parameter file, it is not allowed to change in the file other than the va
 100                     // water amount [ml]
 80                      // flow rate [L/h] 
 900                     // moist threshold []
-2000                    // max allowed moist level []
+-2000                    // max allowed moist level []
 200                     // min allowed moist level []
 2                       // sampling time for the moist sensor readings [s]
-
-/* ADAFRUIT STEMMA I2C SOIL SENSOR  */
-#define I2C_DEVICE_ADDRESS 0x36
-#define I2C_BASE           0x0F
-#define I2C_CHANNEL_OFFSET 0x10
-#define MIN_MOIST_READING  200
-
-/* DC WATER PUMP */
-#define PIN                 1    // GPIO18, Physical pin 12
-
-
-
-
+0x36                    // i2c device address  
+0x0f                    // i2c base 
+0x10                    // i2c channel offset
+1                       // pump pin number, wiringPi: 1 = GPIO18, Physical pin 12

@@ -21,18 +21,10 @@ int32_t main()
     TankManager tank{ SensorType::NO_Sensor, ActuatorType::RELAY_Switch }; 
     print::ok_msg("New tank manager initialized.\n");
 
-   // set_param(Param::control_period);
-
-    tank.set_flow_rate( FLOW_RATE );
-    tank.set_water_amount( WATER_AMOUNT );
-
     PotManager pot{ SensorType::I2C_Sensor };
     print::ok_msg("New pot manager initialized.\n");    
 
-    pot.set_sensor_minmax( MIN_MOIST_READING, MAX_MOIST_READING );
-    pot.set_treashold( MOIST_TRESHOLD );
-    pot.set_sampling_time( 3 );
-
+    set_params(tank, pot);
 
     control_routine(pot, tank);
 

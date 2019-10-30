@@ -10,6 +10,8 @@
 
 
 #include "parseParams.hpp"
+#include "potManager.hpp"
+#include "tankManager.hpp"
 
 /**
     reads in and parses the parameter value on a given row 
@@ -57,14 +59,58 @@ util::Expected<int32_t> parse_param( uint32_t target_row, const char* file_name=
     return std::invalid_argument("Could not open file\n");
 
 }
+/**
+ *  sets the parameters of TankManager and PotManager objects
 
-int32_t param(Param param ) noexcept
+    @param reference to a TankManager and PotManager objects
+    @return void
+*/
+void set_params(TankManager& tank, PotManager& pot) noexcept
 {
-    util::Expected<int32_t> result{ parse_param(static_cast<uint32_t>(param)) };
-    if (result.isValid()){
-        int32_t data{static_cast<int32_t>(result.get())};
+    util::Expected<int32_t> param{
+         parse_param(static_cast<uint32_t>(Param::flow_rate))};
+    if (param.isValid()){
+        tank.set_flow_rate(param.get());
+    } else {
+        print::error_msg("Could not set the flow rate\n");
+        print::error_msg(param.exceptInfo());
     }
 
+    param = parse_param(static_cast<uint32_t>(Param::water_amount));
+    if (param.isValid()){
+        tank.set_water_amount(static_cast<uint32_t>(param.get()));
+    } else {
+        print::error_msg("Could not set the water amount\n");
+        print::error_msg(param.exceptInfo());
+    }
 
+    param = parse_param(static_cast<uint32_t>(Param::min_moist_reading));
+    util::Expected<int32_t> param2{
+        parse_param(static_cast<uint32_t>(Param::max_moist_reading))};
+    if (param.isValid() && param2.isValid()){
+        pot.set_sensor_minmax(static_cast<uint32_t>(param.get()), 
+        static_cast<uint32_t>(param2.get()));
+    } else {
+        print::error_msg("Could not set the sensor range\n");
+        if(!param.isValid())
+            print::error_msg(param.exceptInfo());
+        if(!param2.isValid())
+            print::error_msg(param2.exceptInfo());
+    }
 
+    param = parse_param(static_cast<uint32_t>(Param::moist_treashold));
+    if(param.isValid()){
+        pot.set_treashold(static_cast<uint32_t>(param.get()));
+    } else {
+        print::error_msg("Could not set the humidity threashold\n");
+        print::error_msg(param.exceptInfo());
+    }
+
+    param = parse_param(static_cast<uint32_t>(Param::sampling_time));
+    if(param.isValid()){
+        pot.set_sampling_time(static_cast<uint32_t>(param.get()));
+    } else {
+        print::error_msg("Could not set the sampling time for the humidity sensor\n");
+        print::error_msg(param.exceptInfo());
+    }
 }

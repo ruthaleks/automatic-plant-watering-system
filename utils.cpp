@@ -7,9 +7,9 @@
 #include <regex>
 
 #include "lib/expected.h"
-#include "lib/print.hpp"
+#include "lib/colors.hpp"
 
-#include "params.hpp"
+#include "param.hpp"
 #include "potManager.hpp"
 #include "tankManager.hpp"
 #include "utils.hpp"
@@ -167,4 +167,18 @@ void set_params(TankManager& tank, PotManager& pot) noexcept
     }
     
 }
- 
+
+namespace print{
+
+void error_msg(const char* msg) noexcept {
+    std::cout << BOLD(FRED("ERR ")) << msg ;
+}
+void wrn_msg(const char* msg) noexcept{
+    std::cout << BOLD(FYEL("WRN ")) << msg ;
+}
+void ok_msg(const char* msg) noexcept{
+    std::cout << BOLD(FGRN("OK ")) << msg ;
+}
+}
+
+

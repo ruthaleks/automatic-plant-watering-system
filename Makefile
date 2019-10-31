@@ -1,6 +1,6 @@
 CC = g++
 CPPFLAGS = -std=c++17 -Wall -Werror -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
-COMMONSRC =  control.cpp potManager.cpp tankManager.cpp sensorMonitor.cpp actuatorController.cpp devices.cpp lib/print.cpp utils.cpp
+COMMONSRC =  control.cpp potManager.cpp tankManager.cpp sensorMonitor.cpp actuatorController.cpp devices.cpp utils.cpp
 SRC = main.cpp $(COMMONSRC)
 TESTSRC = $(COMMONSRC) unittest/test.cpp
 OBJ = app

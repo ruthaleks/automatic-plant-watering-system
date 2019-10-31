@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "lib/colors.hpp"
-#include "lib/print.hpp"
 
 #include "actuatorController.hpp"
 #include "control.hpp"

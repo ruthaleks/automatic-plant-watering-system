@@ -9,7 +9,6 @@
 
 #include "lib/colors.hpp"
 #include "lib/expected.h"
-#include "lib/print.hpp"
 
 #include "actuatorController.hpp"
 #include "control.hpp"
@@ -18,6 +17,7 @@
 #include "potManager.hpp"
 #include "sensorMonitor.hpp"
 #include "tankManager.hpp"
+#include "utils.hpp"
 
 
 int32_t control_routine(PotManager& pot, TankManager& tank)

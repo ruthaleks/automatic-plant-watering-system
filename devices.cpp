@@ -6,9 +6,9 @@
 
 #include "lib/colors.hpp"
 #include "lib/expected.h"
-#include "lib/print.hpp"
 
 #include "devices.hpp"
+#include "utils.hpp"
 
 #ifdef PI
 #include "drivers.hpp"

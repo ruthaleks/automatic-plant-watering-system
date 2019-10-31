@@ -14,6 +14,7 @@
 #include "tankManager.hpp"
 #include "utils.hpp"
 
+
 /**
     reads in and parses the parameter value on a given row 
     in the parameter file. 
@@ -72,7 +73,7 @@ Exp_i32 parse_param( uint32_t target_row, const char* file_name)  noexcept
     @return:
 */
 template <typename T>
-const util::Expected<T> check_type(int32_t value, T& ) noexcept
+const util::Expected<T> check_type(int32_t value ) noexcept
 {
     if(value >= static_cast<int32_t>(std::numeric_limits<T>::min())){
             return static_cast<T>(value);
@@ -88,12 +89,12 @@ const util::Expected<T> check_type(int32_t value, T& ) noexcept
     @return: 
 */
 template <typename T>
-const util::Expected<T> read_param(Param param, T& type) noexcept
+const util::Expected<T> read_param(Param param) noexcept
 {
     util::Expected<int32_t> res{ 
         parse_param(static_cast<uint32_t> (param), "params.txt")};
     if( res.isValid() ){
-        util::Expected<T> data{ check_type(res.get(), type)};
+        util::Expected<T> data{ check_type<T>(res.get())};
         if(data.isValid()){
             return data.get();
         }
@@ -114,10 +115,8 @@ const util::Expected<T> read_param(Param param, T& type) noexcept
 void set_params(TankManager& tank, PotManager& pot) noexcept
 {
     bool ok{true};
-    int32_t i32{}; 
-    uint32_t u32{};
 
-    Exp_i32 flow_rate{ read_param(Param::flow_rate, i32)};
+    Exp_i32 flow_rate{ read_param<i32>(Param::flow_rate)};
     if (flow_rate.isValid()) {
         tank.set_flow_rate( flow_rate.get() );
     } else {
@@ -125,7 +124,7 @@ void set_params(TankManager& tank, PotManager& pot) noexcept
         std::cout << flow_rate.exceptInfo();
     }
 
-    Exp_u32 water_amount{ read_param(Param::water_amount, u32) };
+    Exp_u32 water_amount{ read_param<u32>(Param::water_amount) };
     if (water_amount.isValid()){
         tank.set_water_amount(water_amount.get());
     } else {
@@ -133,8 +132,8 @@ void set_params(TankManager& tank, PotManager& pot) noexcept
         std::cout << water_amount.exceptInfo();
     }
 
-    Exp_u32 min{read_param(Param::min_moist_reading, u32)};
-    Exp_u32 max{read_param(Param::max_moist_reading, u32)};
+    Exp_u32 min{read_param<u32>(Param::min_moist_reading)};
+    Exp_u32 max{read_param<u32>(Param::max_moist_reading)};
     if (min.isValid() && max.isValid()){
         pot.set_sensor_minmax(min.get(), max.get());
     } else {
@@ -146,7 +145,7 @@ void set_params(TankManager& tank, PotManager& pot) noexcept
             std::cout << max.exceptInfo();
     }
 
-    Exp_u32 treashold{read_param(Param::moist_treashold, u32)};
+    Exp_u32 treashold{read_param<u32>(Param::moist_treashold)};
     if(treashold.isValid()){
         pot.set_treashold(treashold.get());
     } else {
@@ -155,7 +154,7 @@ void set_params(TankManager& tank, PotManager& pot) noexcept
         std::cout << treashold.exceptInfo();
     }
 
-    Exp_u32 sampl_time{read_param(Param::sampling_time, u32)};
+    Exp_u32 sampl_time{read_param<u32>(Param::sampling_time)};
     if(sampl_time.isValid()){
         pot.set_sampling_time(sampl_time.get());
     } else {

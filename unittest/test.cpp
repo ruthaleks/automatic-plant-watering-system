@@ -4,7 +4,7 @@
 #include "catch.hpp"
 #include "../lib/expected.h"
 
-#include "../parseParams.hpp"
+#include "../utils.hpp"
 #include "../potManager.hpp"
 #include "../tankManager.hpp"
 

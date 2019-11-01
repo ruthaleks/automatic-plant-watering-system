@@ -10,7 +10,7 @@ struct I2C {
 };
 
 struct Relay {
-    i32 pin{};    
+    u32 pin{};    
 };
 
 void init_i2c( void );

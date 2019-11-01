@@ -24,16 +24,18 @@ i16 swap_endianess( i16 data )
     return ((b_low << 8) | b_high); 
 }
 
+
 void init_i2c()
 {  
     static I2C i2c{}; 
-    bool ok{true};
+    bool err{false};
 
+    // set parameters
     Exp_i32 dev_addr{read_param<i32>(Param::i2c_device_address)};
     if(dev_addr.isValid()){
         i2c.dev_addr = dev_addr.get();
     } else {
-        ok = false;
+        err = true;
         print::error_msg("The I2C device address cannot be set: ");
         std::cout << dev_addr.exceptInfo();
     }
@@ -42,35 +44,42 @@ void init_i2c()
     if (base.isValid()){
         i2c.base = base.get();
     } else {
-        ok = false;
+        err = true;
         print::error_msg("The I2C base cannot be set: ");
         std::cout << base.exceptInfo();
     }
+
     Exp_i32 offset{read_param<i32>(Param::i2c_channel_offset)};
-        
+    if (offset.isValid()){
+        i2c.base = base.get();
     } else {
-        ok = false;
-        print::error_msg("Failed  ");
-        if(!min.isValid())
-            std::cout << min.exceptInfo();
-        if(!max.isValid())
-            std::cout << max.exceptInfo();
+        err = true;
+        print::error_msg("The I2C channel offset cannot be set:  ");
+        std::cout << base.exceptInfo();
     }
-    
-    fd = wiringPiI2CSetup( dev_addr.get() );
-        i32 res = wiringPiI2CWriteReg8( fd, I2C_BASE, I2C_CHANNEL_OFFSET );
-    
+
+    // setup of Wiring Pi
+    i2c.fd = wiringPiI2CSetup( i2c.dev_addr );
+    if (i2c.fd < 0){
+        err = true;
+        print::error_msg("WiringPi I2C Setup returned an error.\n");
+    }
+
+    if(err){
+        exit(EXIT_FAILURE);
+    }
+
 }
 
 void init_relay_switch()
 {
     static Relay relay{};
 
-    Exp_i32 pin{read_param<i32>(Param::pump_gpio_pin)};
+    Exp_u32 pin{read_param<u32>(Param::pump_gpio_pin)};
     if(pin.isValid()){
         relay.pin = pin.get();
     } else {
-        print::error_msg("The gpio pin for the pump cannot be set: ");
+        print::error_msg("The GPIO pin for the pump cannot be set: ");
         std::cout << pin.exceptInfo();
         exit(EXIT_FAILURE);
     }
@@ -81,37 +90,21 @@ void init_relay_switch()
 }
 
 Exp_u32 i2c_read_sensor_value( void )
-{
-    Exp_i32 base{read_param<i32>(Param::i2c_base)};
-    Exp_i32 offset{read_param<i32>(Param::i2c_channel_offset)};
+{    
+    wiringPiI2CWriteReg8( i2c.fd, i2c.base, i2c.channel_offset );
+    delay(10); 
+    i32 raw_data{ wiringPiI2CReadReg16( fd, 0x00 ) }; // it does not matter what address we read from
 
-    if (base.isValid() && offset.isValid()){
-        i32 res = wiringPiI2CWriteReg8( fd, I2C_BASE, I2C_CHANNEL_OFFSET );
-    } else {
-        print::error_msg("Failed  ");
-        if(!min.isValid())
-            std::cout << min.exceptInfo();
-        if(!max.isValid())
-            std::cout << max.exceptInfo();
-    }
-
-    delay(10);
-    int32_t raw_data{ wiringPiI2CReadReg16( fd, 0x00 ) };
-
-    // if raw_data is negative number then an error has happend
     if (raw_data < 0)
-    {  
-        std::string errmsg{ "WiringPi returned an error with errno = "};
-        errmsg.append( std::to_string( errno ) );
-        return std::invalid_argument( errmsg ); 
-    }
+        return std::invalid_argument( "WiringPi ReadReg16 returned an error.\n"); 
 
-    int32_t data = swap_endianess( raw_data );
-   
-    if (data < 0) {
-        return std::invalid_argument("Negative sensor value after endianess swap.");
-    }
-    return ( uint32_t ) data;    
+    // swap from little to big endian 
+    i32 data { swap_endianess( raw_data ) };
+
+    if (data < 0) 
+        return std::invalid_argument("Negative sensor value after endianess swap.\n");
+    
+    return static_cast<u32>(data);    
 }
 
 void relay_switch( i32 on )

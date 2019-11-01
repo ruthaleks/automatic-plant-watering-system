@@ -16,8 +16,8 @@ using u16 = uint16_t;
 using u32 = uint32_t;
 
 
-using Exp_i32 = const util::Expected<int32_t>;
-using Exp_u32 = const util::Expected<uint32_t>;
+using Exp_i32 = util::Expected<int32_t>;
+using Exp_u32 = util::Expected<uint32_t>;
 
 template <typename T> const util::Expected<T> check_type(int32_t value) noexcept;
 Exp_i32 parse_param(uint32_t, const char*) noexcept;

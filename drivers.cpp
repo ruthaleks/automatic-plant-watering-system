@@ -27,6 +27,9 @@ struct Relay {
     static u32 pin;    
 };
 
+I2C i2c{}; 
+Relay relay{};
+
 
 i16 swap_endianess( i16 data )
 {
@@ -38,7 +41,6 @@ i16 swap_endianess( i16 data )
 
 void init_i2c()
 {  
-    static I2C i2c{}; 
     bool err{false};
 
     // set parameters
@@ -84,7 +86,6 @@ void init_i2c()
 
 void init_relay_switch()
 {
-    static Relay relay{};
 
     Exp_u32 pin{read_param<u32>(Param::pump_gpio_pin)};
     if(pin.isValid()){

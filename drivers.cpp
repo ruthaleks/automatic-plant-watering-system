@@ -16,6 +16,17 @@
 #include "parameters.hpp"
 #include "utils.hpp"
 
+struct I2C {
+    static const i32 fd;
+    static const i32 dev_addr;
+    static const i32 base;
+    static const i32 channel_offset;
+};
+
+struct Relay {
+    static const u32 pin;    
+};
+
 
 i16 swap_endianess( i16 data )
 {
@@ -93,7 +104,7 @@ Exp_u32 i2c_read_sensor_value( void )
 {    
     wiringPiI2CWriteReg8( i2c.fd, i2c.base, i2c.channel_offset );
     delay(10); 
-    i32 raw_data{ wiringPiI2CReadReg16( fd, 0x00 ) }; // it does not matter what address we read from
+    i32 raw_data{ wiringPiI2CReadReg16( i2c.fd, 0x00 ) }; // it does not matter what address we read from
 
     if (raw_data < 0)
         return std::invalid_argument( "WiringPi ReadReg16 returned an error.\n"); 

@@ -3,7 +3,7 @@ System parameter file, it is not allowed to change in the file other than the va
 100                     // water amount [ml]
 80                      // flow rate [L/h] 
 900                     // moist threshold []
--2000                    // max allowed moist level []
+2000                    // max allowed moist level []
 200                     // min allowed moist level []
 2                       // sampling time for the moist sensor readings [s]
 0x36                    // i2c device address  

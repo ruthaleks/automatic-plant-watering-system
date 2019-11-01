@@ -17,14 +17,14 @@
 #include "utils.hpp"
 
 struct I2C {
-    static const i32 fd;
-    static const i32 dev_addr;
-    static const i32 base;
-    static const i32 channel_offset;
+    static i32 fd;
+    static i32 dev_addr;
+    static i32 base;
+    static i32 channel_offset;
 };
 
 struct Relay {
-    static const u32 pin;    
+    static u32 pin;    
 };
 
 

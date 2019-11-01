@@ -1,10 +1,19 @@
 #pragma once 
 
-#include <cstdint>
+#include "utils.hpp"
 
-#include "lib/expected.h"
+struct I2C {
+    i32 fd{};
+    i32 dev_addr{};
+    i32 base{};
+    i32 channel_offset{};
+};
+
+struct Relay {
+    i32 pin{};    
+};
 
 void init_i2c( void );
 void init_relay_switch( void );
-util::Expected<uint32_t> i2c_read_sensor_value( void );
-void relay_switch( int32_t );
+Exp_u32 i2c_read_sensor_value( void );
+void relay_switch( i32 );

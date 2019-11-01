@@ -7,12 +7,12 @@
 #include <vector>
 
 #include "lib/expected.h"
-#include "lib/print.hpp"
 
 
 #include "devices.hpp"
 #include "potManager.hpp"
 #include "sensorMonitor.hpp"
+#include "utils.hpp"
 
 
 PotManager::PotManager( SensorType sensor_type) :

@@ -1,8 +1,10 @@
 #define CATCH_CONFIG_MAIN
 
+
 #include "catch.hpp"
 #include "../lib/expected.h"
 
+#include "../utils.hpp"
 #include "../potManager.hpp"
 #include "../tankManager.hpp"
 
@@ -190,6 +192,57 @@ TEST_CASE(" Test pot manager class", "[pot]")
         REQUIRE( pot.is_dry( 700 ) == false ); // on threashold
         REQUIRE( pot.is_dry( 1000) == false ); // above max 
     }
+
+}
+
+TEST_CASE("Test of parse_param function", "[read]"){
+
+const char* file_name = "unittest/unittest_params.txt";
+    
+    SECTION("incorrect params.txt path") {
+        std::string output{parse_param(2, "wrong/path/params.txt").exceptInfo()};
+        std::string correct_output{"Could not open file\n"};
+        REQUIRE( output.compare(correct_output) == 0);
+    }
+    REQUIRE(parse_param(2, file_name).get() == 1);
+    
+    SECTION("remove leading and trailing spaces"){
+        REQUIRE(parse_param(3, file_name).get() == 100);
+    }
+    SECTION("remove trailing non alphabetic signs"){
+        REQUIRE(parse_param(4, file_name).get() == 500);
+    }
+    SECTION("handle + and - signs"){
+        REQUIRE(parse_param(5, file_name).get() == -465);
+        REQUIRE(parse_param(6, file_name).get() == -545);
+        REQUIRE(parse_param(7, file_name).get() == 545);
+        REQUIRE(parse_param(8, file_name).get() == 348);
+    }
+    SECTION("hex values"){
+        REQUIRE(parse_param(9, file_name).get() == 0x36);
+        REQUIRE(parse_param(10, file_name).get() == 0xabf1f);
+    }
+
+    SECTION("invalid numbers"){
+        std::string output1{parse_param(11, file_name).exceptInfo()};
+        std::string output2{parse_param(12, file_name).exceptInfo()};
+        std::string output3{parse_param(13, file_name).exceptInfo()};
+        std::string correct_output1{"Not a valid number: \n"};
+        std::string correct_output2{"Not a valid number: ahj100\n"};
+        std::string correct_output3{"Not a valid number: +100a\n"};
+        REQUIRE( output1.compare(correct_output1) == 0);
+        REQUIRE( output2.compare(correct_output2) == 0);
+        REQUIRE( output3.compare(correct_output3) == 0);
+    }
+
+    SECTION("out of range"){
+        std::string output{parse_param(20, file_name).exceptInfo()};
+        std::string correct_output{"Parameter not found\n"};
+        REQUIRE( output.compare(correct_output) == 0);
+    }
+
+
+
 
 }
 

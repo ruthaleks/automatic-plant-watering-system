@@ -1,0 +1,12 @@
+System parameter file, it is not allowed to change in the file other than the values. The program will parse input until "/", leading and trailing spaces will be ignored. 
+1                       // control period [min]
+100                     // water amount [ml]
+80                      // flow rate [L/h] 
+900                     // moist threshold []
+-2000                    // max allowed moist level []
+200                     // min allowed moist level []
+2                       // sampling time for the moist sensor readings [s]
+0x36                    // i2c device address  
+0x0f                    // i2c base 
+0x10                    // i2c channel offset
+1                       // pump pin number, wiringPi: 1 = GPIO18, Physical pin 12

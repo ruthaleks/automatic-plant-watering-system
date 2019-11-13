@@ -19,11 +19,12 @@ int32_t main()
     std::cout << BOLD("** Program starts **\n");
     TankManager tank{ SensorType::NO_Sensor, ActuatorType::RELAY_Switch }; 
     print::ok_msg("New tank manager initialized.\n");
+    tank.set_params();
 
     PotManager pot{ SensorType::I2C_Sensor };
     print::ok_msg("New pot manager initialized.\n");    
-
-    set_params(tank, pot);
+    
+    set_params(pot);
 
     control_routine(pot, tank);
 

@@ -77,3 +77,17 @@ void TankManager::set_water_amount(uint32_t value)
         m_water_amount = value;
     }
 }
+
+
+void TankManager::set_params() noexcept 
+{
+    int a = 1;
+    hej(a);
+    //Exp_i32 flow_rate{param_or_error<i32>(Param::flow_rate, "The flow rate cannot be set: ")};
+    //if (flow_rate.isValid())
+    //    set_flow_rate(flow_rate.get());
+    
+   // Exp_u32 water_amount{param_or_error<u32>(Param::water_amount, "The water amount cannot be set: ")};
+   // if (water_amount.isValid())
+    //    set_water_amount(water_amount.get());
+}

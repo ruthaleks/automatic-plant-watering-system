@@ -103,6 +103,33 @@ const util::Expected<T> read_param(Param param) noexcept
     return static_cast<util::Expected<T>>(res); 
 }
 
+template<typename T>
+util::Expected<T> param_or_error(Param param, const char* errmsg){
+    util::Expected<T> res{read_param<T>(param)};
+    if(!res.isValid()){
+        print::error_msg(errmsg);
+        std::cout << res.exceptInfo();
+        exit(EXIT_FAILURE);
+    }
+    return res;
+}
+
+template<typename T>
+util::Expected<T> param_or_wrn(Param param, const char* wrnmsg){
+    util::Expected<T> res{read_param<T>(param)};
+    if(!res.isValid()){
+        print::wrn_msg(wrnmsg);
+        std::cout << res.exceptInfo();
+    }
+    return res;
+}
+
+template<typename T>
+void hej(T& bru){
+    std::cout << bru << " Hej\n";
+}
+
+
 /*
  *  Sets the parameters of TankManager and PotManager objects and 
  *  displays error messages in case of failure. The progra exits if 
@@ -111,11 +138,13 @@ const util::Expected<T> read_param(Param param) noexcept
     @param: 
     @return: 
 */
-
-void set_params(TankManager& tank, PotManager& pot) noexcept
+void set_params(PotManager& pot) noexcept
 {
     bool ok{true};
-
+/*
+    Exp_i32 flow_rate{param_or_error<i32>(Param::flow_rate, "The flow rate cannot be set: ")};
+    if (flow_rate.isValid())
+        tank.set_flow_rate(flow_rate.get());
     Exp_i32 flow_rate{ read_param<i32>(Param::flow_rate)};
     if (flow_rate.isValid()) {
         tank.set_flow_rate( flow_rate.get() );
@@ -131,7 +160,7 @@ void set_params(TankManager& tank, PotManager& pot) noexcept
         print::wrn_msg("The water amount cannot be set: ");
         std::cout << water_amount.exceptInfo();
     }
-
+*/
     Exp_u32 min{read_param<u32>(Param::min_moist_reading)};
     Exp_u32 max{read_param<u32>(Param::max_moist_reading)};
     if (min.isValid() && max.isValid()){
@@ -181,3 +210,4 @@ void ok_msg(const char* msg) noexcept{
 }
 
 
+template class param_or_error<i32>;

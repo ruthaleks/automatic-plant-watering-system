@@ -26,4 +26,6 @@ class TankManager
         
         void set_flow_rate( int32_t ) const;
         void set_water_amount( uint32_t  );
+        void set_params() noexcept;
+
 };
